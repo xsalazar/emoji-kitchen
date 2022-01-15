@@ -1,10 +1,4 @@
-import {
-  createTheme,
-  Grid,
-  ImageList,
-  ImageListItem,
-  Box,
-} from "@mui/material";
+import { Grid, ImageList, ImageListItem, Box } from "@mui/material";
 import { imageListItemClasses } from "@mui/material/ImageListItem";
 import React from "react";
 import emojiData from "./emojiData.json";
@@ -254,6 +248,7 @@ export default class Kitchen extends React.Component<
         return (
           <ImageListItem>
             <img
+              alt=""
               src={`${rootUrl}/${combo.date}/${this.googleRequestEmoji(
                 combo.leftEmoji
               )}/${this.googleRequestEmoji(
@@ -267,6 +262,7 @@ export default class Kitchen extends React.Component<
       middleList = (
         <ImageListItem>
           <img
+            alt=""
             src={`${rootUrl}/${
               this.state.emojiData[this.state.leftSink][0].date
             }/${this.googleRequestEmoji(
@@ -280,18 +276,6 @@ export default class Kitchen extends React.Component<
     } else {
       middleList = <div></div>;
     }
-
-    const theme = createTheme({
-      breakpoints: {
-        values: {
-          xs: 0,
-          sm: 350,
-          md: 650,
-          lg: 900,
-          xl: 1200,
-        },
-      },
-    });
 
     return (
       <Grid container>
@@ -333,6 +317,7 @@ export default class Kitchen extends React.Component<
                   }}
                 >
                   <img
+                    alt=""
                     src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emojiCodepoint
                       .split("-")[0]
                       .replaceAll("-", "_")}.svg`}
@@ -365,7 +350,6 @@ export default class Kitchen extends React.Component<
               },
             }}
           >
-            {" "}
             {knownSupportedEmoji.map((emojiCodepoint) => {
               return (
                 <ImageListItem
@@ -387,6 +371,7 @@ export default class Kitchen extends React.Component<
                   }}
                 >
                   <img
+                    alt=""
                     src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emojiCodepoint
                       .split("-")[0]
                       .replaceAll("-", "_")}.svg`}
