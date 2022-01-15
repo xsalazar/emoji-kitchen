@@ -1,4 +1,4 @@
-import { Grid, ImageList, ImageListItem, Box } from "@mui/material";
+import { Grid, ImageList, ImageListItem, Box, Container } from "@mui/material";
 import { imageListItemClasses } from "@mui/material/ImageListItem";
 import React from "react";
 import emojiData from "./emojiData.json";
@@ -278,111 +278,149 @@ export default class Kitchen extends React.Component<
     }
 
     return (
-      <Grid container>
-        <Grid item xs={4} sx={{ backgroundColor: "lightblue" }}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "repeat(2, 1fr)",
-                sm: "repeat(3, 1fr)",
-                md: "repeat(4, 1fr)",
-                lg: "repeat(8, 1fr)",
-                xl: "repeat(8, 1fr)",
-              },
-              [`& .${imageListItemClasses.root}`]: {
-                display: "flex",
-                flexDirection: "column",
-              },
-            }}
-          >
-            {knownSupportedEmoji.map((emojiCodepoint) => {
-              return (
-                <ImageListItem
-                  key={emojiCodepoint}
-                  onClick={(event) =>
-                    this.handleLeftEmojiClicked(emojiCodepoint, event)
-                  }
-                  sx={{
-                    p: 1,
-                    m: 0.5,
-                    borderRadius: 2,
-                    backgroundColor: (theme) =>
-                      emojiCodepoint === this.state.leftSink
-                        ? theme.palette.action.selected
-                        : theme.palette.background.default,
-                    "&:hover": {
-                      backgroundColor: (theme) => theme.palette.action.hover,
-                    },
-                  }}
-                >
-                  <img
-                    alt=""
-                    src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emojiCodepoint
-                      .split("-")[0]
-                      .replaceAll("-", "_")}.svg`}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              );
-            })}
+      <div style={{ height: "calc(100vh - 200px)" }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
+            {/* Left Sink */}
+            <Box
+              sx={{
+                height: "calc(100vh - 200px)",
+                overflowY: "auto",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "repeat(3, 1fr)",
+                    sm: "repeat(5, 1fr)",
+                    md: "repeat(7, 1fr)",
+                    lg: "repeat(9, 1fr)",
+                    xl: "repeat(9, 1fr)",
+                  },
+                  [`& .${imageListItemClasses.root}`]: {
+                    display: "flex",
+                    flexDirection: "column",
+                  },
+                }}
+              >
+                {knownSupportedEmoji.map((emojiCodepoint) => {
+                  return (
+                    <ImageListItem
+                      key={emojiCodepoint}
+                      onClick={(event) =>
+                        this.handleLeftEmojiClicked(emojiCodepoint, event)
+                      }
+                      sx={{
+                        p: 0.5,
+                        borderRadius: 2,
+                        backgroundColor: (theme) =>
+                          emojiCodepoint === this.state.leftSink
+                            ? theme.palette.action.selected
+                            : theme.palette.background.default,
+                        "&:hover": {
+                          backgroundColor: (theme) =>
+                            theme.palette.action.hover,
+                        },
+                      }}
+                    >
+                      <img
+                        alt=""
+                        src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emojiCodepoint
+                          .split("-")[0]
+                          .replaceAll("-", "_")}.svg`}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  );
+                })}
+              </Box>
+            </Box>
+
+            {/* Middle Sink */}
+            <Box
+              sx={{
+                p: 1,
+                height: "calc(100vh - 200px)",
+                overflowY: "auto",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "repeat(2, 1fr)",
+                    sm: "repeat(3, 1fr)",
+                    md: "repeat(4, 1fr)",
+                  },
+                  [`& .${imageListItemClasses.root}`]: {
+                    display: "flex",
+                    flexDirection: "column",
+                  },
+                }}
+              >
+                {middleList}
+              </Box>
+            </Box>
+
+            {/* Right Sink */}
+            <Box
+              sx={{
+                height: "calc(100vh - 200px)",
+                overflowY: "auto",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "repeat(3, 1fr)",
+                    sm: "repeat(5, 1fr)",
+                    md: "repeat(7, 1fr)",
+                    lg: "repeat(9, 1fr)",
+                    xl: "repeat(9, 1fr)",
+                  },
+                  [`& .${imageListItemClasses.root}`]: {
+                    display: "flex",
+                    flexDirection: "column",
+                  },
+                }}
+              >
+                {knownSupportedEmoji.map((emojiCodepoint) => {
+                  return (
+                    <ImageListItem
+                      key={emojiCodepoint}
+                      onClick={(event) =>
+                        this.handleRightEmojiClicked(emojiCodepoint, event)
+                      }
+                      sx={{
+                        p: 0.5,
+                        borderRadius: 2,
+                        backgroundColor: (theme) =>
+                          emojiCodepoint === this.state.rightSink
+                            ? theme.palette.action.selected
+                            : theme.palette.background.default,
+                        "&:hover": {
+                          backgroundColor: (theme) =>
+                            theme.palette.action.hover,
+                        },
+                      }}
+                    >
+                      <img
+                        alt=""
+                        src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emojiCodepoint
+                          .split("-")[0]
+                          .replaceAll("-", "_")}.svg`}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  );
+                })}
+              </Box>
+            </Box>
           </Box>
-        </Grid>
-        <Grid item xs={4} sx={{ backgroundColor: "lightgreen" }}>
-          <ImageList cols={4} gap={8}>
-            {middleList}
-          </ImageList>
-        </Grid>
-        <Grid item xs={4} sx={{ backgroundColor: "lightblue" }}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "repeat(2, 1fr)",
-                sm: "repeat(3, 1fr)",
-                md: "repeat(4, 1fr)",
-                lg: "repeat(8, 1fr)",
-                xl: "repeat(8, 1fr)",
-              },
-              [`& .${imageListItemClasses.root}`]: {
-                display: "flex",
-                flexDirection: "column",
-              },
-            }}
-          >
-            {knownSupportedEmoji.map((emojiCodepoint) => {
-              return (
-                <ImageListItem
-                  key={emojiCodepoint}
-                  onClick={(event) =>
-                    this.handleRightEmojiClicked(emojiCodepoint, event)
-                  }
-                  sx={{
-                    p: 1,
-                    m: 0.5,
-                    borderRadius: 2,
-                    backgroundColor: (theme) =>
-                      emojiCodepoint === this.state.rightSink
-                        ? theme.palette.action.selected
-                        : theme.palette.background.default,
-                    "&:hover": {
-                      backgroundColor: (theme) => theme.palette.action.hover,
-                    },
-                  }}
-                >
-                  <img
-                    alt=""
-                    src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emojiCodepoint
-                      .split("-")[0]
-                      .replaceAll("-", "_")}.svg`}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              );
-            })}
-          </Box>
-        </Grid>
-      </Grid>
+        </Container>
+      </div>
     );
   }
 
