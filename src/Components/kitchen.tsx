@@ -1,4 +1,4 @@
-import { Grid, ImageList, ImageListItem, Box, Container } from "@mui/material";
+import { ImageListItem, Box, Container } from "@mui/material";
 import { imageListItemClasses } from "@mui/material/ImageListItem";
 import React from "react";
 import emojiData from "./emojiData.json";
