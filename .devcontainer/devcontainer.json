@@ -1,0 +1,4 @@
+{
+  "image": "node:17",
+  "extensions": ["esbenp.prettier-vscode"]
+}

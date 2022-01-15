@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    labels:
+      - "dependabot :robot:"
+    reviewers:
+      - "xsalazar"
+    schedule:
+      interval: "daily"
