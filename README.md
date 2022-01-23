@@ -1,46 +1,37 @@
-# Getting Started with Create React App
+# 🧑‍🍳 Emoji Kitchen
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains the source code for the website [https://emojikitchen.dev](https://emojikitchen.dev) and was bootstrapped using [`create-react-app`](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+This website allows for quick and easy browsing of the comprehensive list of supported emoji mashups as part of Google's [Emoji Kitchen](https://emojipedia.org/emoji-kitchen/).
 
-In the project directory, you can run:
+There are currently just over 20,000 possible valid combinations showcasing the unique illustrations and combined emoji!
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This repository leverages [VSCode's devcontainer](https://code.visualstudio.com/docs/remote/containers) feature to ensure all necessary dependencies are available inside the container for development.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Application
 
-### `npm test`
+To get started:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm init && npm start
+```
 
-### `npm run build`
+This will start the application on your local machine, running on [http://localhost:3000/](http://localhost:3000).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Deployments
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+All application deployments are managed via GitHub Actions and the [`./.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) workflow.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Additionally, application dependencies are automatically managed and updated via Dependabot and the [`./.github/workflows/automerge-dependabot.yml`](./.github/workflows/automerge-dependabot.yml) workflow.
 
-### `npm run eject`
+## Supporting Emoji Data
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This list of supported emoji and valid emoji combinations was built by scraping Google's API that serves the mashed up images.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This tooling can be found in the [`./scripts`](./scripts) directory.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The [output JSON file](./scripts/emojiOutput.json) is committed directly to this repository due to the extended nature of how long it takes to gather this information.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The script allows for iteratively building on this saved data, so future emojis need only be added to the scraping algorithm and it will be partially added into the existing file.
