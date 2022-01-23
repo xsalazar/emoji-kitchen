@@ -125,7 +125,6 @@ export default class Kitchen extends React.Component<
                   },
                   [`& .${imageListItemClasses.root}`]: {
                     display: "flex",
-                    flexDirection: "column",
                   },
                 }}
               >
@@ -152,7 +151,6 @@ export default class Kitchen extends React.Component<
                   },
                   [`& .${imageListItemClasses.root}`]: {
                     display: "flex",
-                    flexDirection: "column",
                   },
                 }}
               >
@@ -180,7 +178,6 @@ export default class Kitchen extends React.Component<
                   },
                   [`& .${imageListItemClasses.root}`]: {
                     display: "flex",
-                    flexDirection: "column",
                   },
                 }}
               >
