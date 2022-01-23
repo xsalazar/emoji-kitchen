@@ -102,7 +102,7 @@ export default class Kitchen extends React.Component<
     }
 
     return (
-      <div style={{ height: "calc(100vh - 100px)" }}>
+      <div style={{ height: "calc(100vh - 200px)" }}>
         <Container maxWidth="lg">
           <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
             {/* Left Emoji List */}
