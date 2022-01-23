@@ -254,23 +254,7 @@ async function getKitchenSink() {
       var leftEmojiCodepoint = knownSupportedEmoji[i];
       var leftRequestEmoji = googleRequestEmoji(leftEmojiCodepoint);
 
-      // We've got an entry for this key, but that key has data for a different date, so skip it
-      // In testing, it doesn't seem like Google updates previously implemented left-hand-side combinations with a new right-hand-side + new date
-      // So this shortcut speeds up the process a lot
-      //
-      // For example, if 🐱 was previously implemented, but they later added a new combo with 🐱 and 💰,
-      //   the new endpoint would be at ${rootUrl}/${brandNewDate}/💰/💰_🐱.png
-      //   NOT backfilled to ${rootUrl}/${brandNewDate}/🐱/🐱_💰.png
-      // if (
-      //   leftEmojiCodepoint in outputData &&
-      //   outputData[leftEmojiCodepoint].length > 0 &&
-      //   outputData[leftEmojiCodepoint][0].date !== date
-      // ) {
-      //   console.log(`Skipping ${printableEmoji(leftEmojiCodepoint)}`);
-      //   continue;
-      // }
-
-      // We've got entries for this key and date, so check all the pairwise possibilites...
+      // Check all the pairwise possibilites...
       for (var j = 0; j < knownSupportedEmoji.length; j++) {
         var rightEmojiCodepoint = knownSupportedEmoji[j];
         var rightRequestEmoji = googleRequestEmoji(rightEmojiCodepoint);
