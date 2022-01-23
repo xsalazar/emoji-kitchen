@@ -103,13 +103,14 @@ export default class Kitchen extends React.Component<
 
     return (
       <div style={{ height: "calc(100vh - 200px)" }}>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
             {/* Left Emoji List */}
             <Box
               sx={{
                 height: "calc(100vh - 200px)",
                 overflowY: "auto",
+                justifyItems: "center",
               }}
             >
               <Box
@@ -120,7 +121,7 @@ export default class Kitchen extends React.Component<
                     sm: "repeat(5, 1fr)",
                     md: "repeat(7, 1fr)",
                     lg: "repeat(9, 1fr)",
-                    xl: "repeat(9, 1fr)",
+                    xl: "repeat(10, 1fr)",
                   },
                   [`& .${imageListItemClasses.root}`]: {
                     display: "flex",
@@ -164,6 +165,7 @@ export default class Kitchen extends React.Component<
               sx={{
                 height: "calc(100vh - 200px)",
                 overflowY: "auto",
+                justifyItems: "center",
               }}
             >
               <Box
@@ -174,7 +176,7 @@ export default class Kitchen extends React.Component<
                     sm: "repeat(5, 1fr)",
                     md: "repeat(7, 1fr)",
                     lg: "repeat(9, 1fr)",
-                    xl: "repeat(9, 1fr)",
+                    xl: "repeat(10, 1fr)",
                   },
                   [`& .${imageListItemClasses.root}`]: {
                     display: "flex",
@@ -296,6 +298,8 @@ export default class Kitchen extends React.Component<
           }}
         >
           <img
+            width="32px"
+            height="32px"
             alt={e}
             src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${e
               .split("-")[0]
