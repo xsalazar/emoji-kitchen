@@ -18,7 +18,7 @@ export default class Footer extends React.Component {
               <MentionIcon size="small" verticalAlign="middle" />
             </Link>
             <Link
-              href="https://github.com/xsalazar/download-emoji"
+              href="https://github.com/xsalazar/emoji-kitchen"
               color="textPrimary"
               aria-label="Source Code"
               target="_blank"
