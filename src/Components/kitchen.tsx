@@ -79,9 +79,7 @@ export default class Kitchen extends React.Component<
 
       leftList = this.getEmojiImageList(
         selectedLeftEmoji,
-        this.handleLeftEmojiClicked,
-        undefined,
-        true
+        this.handleLeftEmojiClicked
       );
 
       middleList = (
@@ -223,6 +221,16 @@ export default class Kitchen extends React.Component<
     if (this.state.selectedLeftEmoji === clickedEmoji) {
       this.setState({
         selectedLeftEmoji: "",
+        selectedRightEmoji: "",
+      });
+    }
+    // Else we clicked another left emoji while both are selcted, set the left column as selected and clear right column
+    else if (
+      this.state.selectedLeftEmoji !== "" &&
+      this.state.selectedRightEmoji !== ""
+    ) {
+      this.setState({
+        selectedLeftEmoji: clickedEmoji,
         selectedRightEmoji: "",
       });
     } else {
