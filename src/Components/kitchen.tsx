@@ -94,8 +94,7 @@ export default class Kitchen extends React.Component<
       rightList = this.getEmojiImageList(
         selectedRightEmoji,
         this.handleRightEmojiClicked,
-        undefined,
-        true
+        selectedLeftEmoji
       );
     }
 
@@ -253,8 +252,7 @@ export default class Kitchen extends React.Component<
       clickedEmoji: string,
       event: React.SyntheticEvent
     ) => void,
-    filterToValidCombosFor?: string,
-    disableAllExceptSelected?: boolean
+    filterToValidCombosFor?: string
   ): Array<JSX.Element> {
     return knownSupportedEmoji.map((e) => {
       // Every emoji is considered valid unless we pass in one-half of the pair to filter on
@@ -268,16 +266,10 @@ export default class Kitchen extends React.Component<
         );
       }
 
-      // Handle complex enable/disable behavior -- due to wanting to disable all other emoji when BOTH are selected for usability
-      // If we're disabling all emoji except the one we're on, clear click handler and make transparent
-      // else if it's a valid combo and we have a click handler, set click handler and make visible
-      // otherwise, disable click handler and make transparent
+      // Handle complex enable/disable behavior -- due to needing to restrict certain invalid combinations
       var onClick: (clickedEmoji: string, event: React.SyntheticEvent) => void;
       var opacity: number;
-      if (disableAllExceptSelected && e !== selectedEmoji) {
-        onClick = () => {};
-        opacity = 0.2;
-      } else if (isValidCombo && onClickHandler) {
+      if (isValidCombo && onClickHandler) {
         onClick = onClickHandler;
         opacity = 1;
       } else {
