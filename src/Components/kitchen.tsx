@@ -299,8 +299,9 @@ export default class Kitchen extends React.Component<
             height="32px"
             alt={e}
             src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${e
-              .split("-")[0]
-              .replaceAll("-", "_")}.svg`}
+              .split("-")
+              .filter((x) => x != "fe0f")
+              .join("_")}.svg`}
             loading="lazy"
           />
         </ImageListItem>
@@ -392,6 +393,7 @@ const knownSupportedEmoji = [
   "1f625", // 😥
   "1f613", // 😓
   "1f61e", // 😞
+  "1f62e-200d-1f4a8", // 😮‍💨
   "1f616", // 😖
   "1f623", // 😣
   "1f629", // 😩
@@ -409,6 +411,7 @@ const knownSupportedEmoji = [
   "1f912", // 🤒
   "1f915", // 🤕
   "1f974", // 🥴
+  "1f636-200d-1f32b-fe0f", // 😶‍🌫️
   "1fae0", // 🫠
   "1fae5", // 🫥
   "1f635", // 😵
@@ -456,11 +459,13 @@ const knownSupportedEmoji = [
   "1f48c", // 💌
   "1f49f", // 💟
   "2763-fe0f", // ❣️
+  "2764-fe0f-200d-1fa79", // ❤️‍🩹
   "2764-fe0f", // ❤️
   "1f494", // 💔
   "1f48b", // 💋
   "1f9a0", // 🦠
   "1f480", // 💀
+  "1f440", // 👀
   "1f441-fe0f", // 👁️
   "1f490", // 💐
   "1f339", // 🌹
@@ -523,6 +528,10 @@ const knownSupportedEmoji = [
   "1f388", // 🎈
   "1f381", // 🎁
   "1f397-fe0f", // 🎗️
+  "1f947", // 🥇
+  "1f948", // 🥈
+  "1f949", // 🥉
+  "1f396-fe0f", // 🎖
   "1f3c6", // 🏆
   "1fa84", // 🪄
   "1f3a7", // 🎧
