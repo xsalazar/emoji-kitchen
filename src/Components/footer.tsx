@@ -9,7 +9,7 @@ export default class Footer extends React.Component {
         <Box component="footer" sx={{ py: 4 }}>
           <Stack spacing={4} direction="row" justifyContent="center">
             <Link
-              href="https://github.com/xsalazar"
+              href="https://xsalazar.com"
               color="textPrimary"
               aria-label="Contact Me"
               target="_blank"
