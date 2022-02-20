@@ -300,7 +300,7 @@ export default class Kitchen extends React.Component<
             alt={e}
             src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${e
               .split("-")
-              .filter((x) => x != "fe0f")
+              .filter((x) => x !== "fe0f")
               .join("_")}.svg`}
             loading="lazy"
           />
