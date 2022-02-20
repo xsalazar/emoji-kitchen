@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.24.0",
-    "emoji-datasource": "^7.0.2"
+    "axios": "^0.24.0"
   }
 }
