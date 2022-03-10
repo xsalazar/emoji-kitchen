@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://emojikitchen.dev",
   "dependencies": {
-    "@emotion/react": "^11.8.1",
+    "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.5.0",
     "@primer/octicons-react": "^17.0.0",
