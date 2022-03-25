@@ -3428,7 +3428,8 @@
     { "leftEmoji": "1f618", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "1f618", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "1f618", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "1f618", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    { "leftEmoji": "1f618", "rightEmoji": "1f5ef-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f618", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f970": [
     { "leftEmoji": "1f600", "rightEmoji": "1f970", "date": "20201001" },
@@ -3879,7 +3880,8 @@
     { "leftEmoji": "1f970", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "1f970", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "1f970", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "1f970", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    { "leftEmoji": "1f970", "rightEmoji": "1f5ef-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f970", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f60d": [
     { "leftEmoji": "1f600", "rightEmoji": "1f60d", "date": "20201001" },
@@ -4330,7 +4332,8 @@
     { "leftEmoji": "1f60d", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "1f60d", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "1f60d", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "1f60d", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    { "leftEmoji": "1f60d", "rightEmoji": "1f5ef-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f60d", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f929": [
     { "leftEmoji": "1f600", "rightEmoji": "1f929", "date": "20201001" },
@@ -24788,7 +24791,8 @@
     { "leftEmoji": "1f31f", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "1f31f", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "1f31f", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "1f31f", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    { "leftEmoji": "1f31f", "rightEmoji": "1f5ef-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f31f", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f573-fe0f": [
     { "leftEmoji": "1f600", "rightEmoji": "1f573-fe0f", "date": "20201001" },
@@ -25994,7 +25998,8 @@
     { "leftEmoji": "1f498", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "1f498", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "1f498", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "1f498", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    { "leftEmoji": "1f498", "rightEmoji": "1f5ef-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f498", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f49d": [
     { "leftEmoji": "1f600", "rightEmoji": "1f49d", "date": "20201001" },
@@ -27088,7 +27093,8 @@
     { "leftEmoji": "1f493", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "1f493", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "1f493", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "1f493", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    { "leftEmoji": "1f493", "rightEmoji": "1f5ef-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f493", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f49e": [
     { "leftEmoji": "1f600", "rightEmoji": "1f49e", "date": "20201001" },
@@ -27767,7 +27773,8 @@
     { "leftEmoji": "1f495", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "1f495", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "1f495", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "1f495", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    { "leftEmoji": "1f495", "rightEmoji": "1f5ef-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f495", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f48c": [
     { "leftEmoji": "1f600", "rightEmoji": "1f48c", "date": "20201001" },
@@ -28743,7 +28750,12 @@
     { "leftEmoji": "2763-fe0f", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "2763-fe0f", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "2763-fe0f", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "2763-fe0f", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    {
+      "leftEmoji": "2763-fe0f",
+      "rightEmoji": "1f5ef-fe0f",
+      "date": "20220203"
+    },
+    { "leftEmoji": "2763-fe0f", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f494": [
     { "leftEmoji": "1f600", "rightEmoji": "1f494", "date": "20201001" },
@@ -32230,7 +32242,12 @@
     { "leftEmoji": "2601-fe0f", "rightEmoji": "3030-fe0f", "date": "20220203" },
     { "leftEmoji": "2601-fe0f", "rightEmoji": "00a9-fe0f", "date": "20220203" },
     { "leftEmoji": "2601-fe0f", "rightEmoji": "00ae-fe0f", "date": "20220203" },
-    { "leftEmoji": "2601-fe0f", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+    {
+      "leftEmoji": "2601-fe0f",
+      "rightEmoji": "1f5ef-fe0f",
+      "date": "20220203"
+    },
+    { "leftEmoji": "2601-fe0f", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ],
   "1f308": [
     { "leftEmoji": "1f600", "rightEmoji": "1f308", "date": "20201001" },
@@ -53189,5 +53206,16 @@
       "date": "20220203"
     },
     { "leftEmoji": "1f31f", "rightEmoji": "1f5ef-fe0f", "date": "20220203" }
+  ],
+  "2122-fe0f": [
+    { "leftEmoji": "1f618", "rightEmoji": "2122-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f970", "rightEmoji": "2122-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f60d", "rightEmoji": "2122-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f498", "rightEmoji": "2122-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f493", "rightEmoji": "2122-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f495", "rightEmoji": "2122-fe0f", "date": "20220203" },
+    { "leftEmoji": "2763-fe0f", "rightEmoji": "2122-fe0f", "date": "20220203" },
+    { "leftEmoji": "2601-fe0f", "rightEmoji": "2122-fe0f", "date": "20220203" },
+    { "leftEmoji": "1f31f", "rightEmoji": "2122-fe0f", "date": "20220203" }
   ]
 }

@@ -449,6 +449,7 @@ var knownSupportedEmoji = [
   "3030-fe0f", // 〰️
   "00a9-fe0f", // ©️
   "00ae-fe0f", // ®️
+  "2122-fe0f", // ™️
   "1f5ef-fe0f", // 🗯️
   "1f4ac", // 💬
 ];
