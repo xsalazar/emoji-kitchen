@@ -6,15 +6,16 @@
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/lab": "^5.0.0-alpha.79",
     "@mui/material": "^5.6.3",
     "@primer/octicons-react": "^17.0.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.1.1",
-    "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.29",
-    "@types/react": "^18.0.8",
-    "@types/react-dom": "^18.0.2",
+    "axios": "^0.27.2",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.9.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.1",
@@ -44,5 +45,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/file-saver": "^2.0.5",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.29",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.2"
   }
 }

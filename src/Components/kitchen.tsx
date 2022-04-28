@@ -1,7 +1,12 @@
-import { ImageListItem, Box, Container } from "@mui/material";
+import { ImageListItem, Box, Container, Menu, MenuItem } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { imageListItemClasses } from "@mui/material/ImageListItem";
+import DownloadIcon from "@mui/icons-material/Download";
 import React from "react";
 import emojiData from "./emojiData.json";
+import JSZip from "jszip";
+import axios from "axios";
+import saveAs from "file-saver";
 
 interface KitchenProps {}
 
@@ -9,6 +14,8 @@ interface KitchenState {
   selectedLeftEmoji: string;
   selectedRightEmoji: string;
   emojiData: EmojiData;
+  bulkDownloadMenu: undefined | MouseCoordinates;
+  bulkDownloading: boolean;
 }
 
 const rootUrl = "https://www.gstatic.com/android/keyboard/emojikitchen";
@@ -24,14 +31,25 @@ export default class Kitchen extends React.Component<
       selectedLeftEmoji: "",
       selectedRightEmoji: "",
       emojiData: emojiData,
+      bulkDownloadMenu: undefined,
+      bulkDownloading: false,
     };
 
     this.handleLeftEmojiClicked = this.handleLeftEmojiClicked.bind(this);
     this.handleRightEmojiClicked = this.handleRightEmojiClicked.bind(this);
+    this.handleBulkDownloadMenuOpen =
+      this.handleBulkDownloadMenuOpen.bind(this);
+    this.handleBulkDownload = this.handleBulkDownload.bind(this);
   }
 
   render(): React.ReactNode {
-    const { selectedLeftEmoji, selectedRightEmoji, emojiData } = this.state;
+    const {
+      selectedLeftEmoji,
+      selectedRightEmoji,
+      emojiData,
+      bulkDownloadMenu,
+      bulkDownloading,
+    } = this.state;
 
     var leftList;
     var middleList;
@@ -103,6 +121,7 @@ export default class Kitchen extends React.Component<
         <Container maxWidth="xl">
           <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
             {/* Left Emoji List */}
+
             <Box
               sx={{
                 height: "calc(100vh - 200px)",
@@ -127,6 +146,36 @@ export default class Kitchen extends React.Component<
               >
                 {leftList}
               </Box>
+
+              {/* Bulk Download Menu */}
+              {selectedLeftEmoji !== "" ? (
+                <Menu
+                  open={bulkDownloadMenu !== undefined}
+                  onClose={() => {
+                    this.setState({ bulkDownloadMenu: undefined });
+                  }}
+                  anchorReference="anchorPosition"
+                  anchorPosition={
+                    bulkDownloadMenu !== undefined
+                      ? {
+                          top: bulkDownloadMenu.mouseY,
+                          left: bulkDownloadMenu.mouseX,
+                        }
+                      : undefined
+                  }
+                >
+                  <MenuItem>
+                    <LoadingButton
+                      loading={bulkDownloading}
+                      loadingPosition="start"
+                      startIcon={<DownloadIcon fontSize="small" />}
+                      onClick={this.handleBulkDownload}
+                    >
+                      Bulk Download
+                    </LoadingButton>
+                  </MenuItem>
+                </Menu>
+              ) : undefined}
             </Box>
 
             {/* Middle Combination List */}
@@ -207,12 +256,16 @@ export default class Kitchen extends React.Component<
       .join("-");
   }
 
+  googleRequestUrlEmojiFilename(combo: EmojiCombo): string {
+    return `${this.googleRequestUrlEmojiPart(
+      combo.leftEmoji
+    )}_${this.googleRequestUrlEmojiPart(combo.rightEmoji)}.png`;
+  }
+
   googleRequestUrl(combo: EmojiCombo): string {
     return `${rootUrl}/${combo.date}/${this.googleRequestUrlEmojiPart(
       combo.leftEmoji
-    )}/${this.googleRequestUrlEmojiPart(
-      combo.leftEmoji
-    )}_${this.googleRequestUrlEmojiPart(combo.rightEmoji)}.png`;
+    )}/${this.googleRequestUrlEmojiFilename(combo)}`;
   }
 
   handleLeftEmojiClicked(clickedEmoji: string, event: React.SyntheticEvent) {
@@ -284,35 +337,85 @@ export default class Kitchen extends React.Component<
       }
 
       return (
-        <ImageListItem
+        <div
           key={e}
-          onClick={(event) => onClick(e, event)}
-          sx={{
-            p: 0.5,
-            borderRadius: 2,
-            opacity: opacity,
-            backgroundColor: (theme) =>
-              e === selectedEmoji
-                ? theme.palette.action.selected
-                : theme.palette.background.default,
-            "&:hover": {
-              backgroundColor: (theme) => theme.palette.action.hover,
-            },
-          }}
+          onContextMenu={
+            selectedEmoji === e ? this.handleBulkDownloadMenuOpen : () => {}
+          }
         >
-          <img
-            width="32px"
-            height="32px"
-            alt={e}
-            src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${e
-              .split("-")
-              .filter((x) => x !== "fe0f")
-              .join("_")}.svg`}
-            loading="lazy"
-          />
-        </ImageListItem>
+          <ImageListItem
+            onClick={(event) => onClick(e, event)}
+            sx={{
+              p: 0.5,
+              borderRadius: 2,
+              opacity: opacity,
+              backgroundColor: (theme) =>
+                e === selectedEmoji
+                  ? theme.palette.action.selected
+                  : theme.palette.background.default,
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.action.hover,
+              },
+            }}
+          >
+            <img
+              width="32px"
+              height="32px"
+              alt={e}
+              src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${e
+                .split("-")
+                .filter((x) => x !== "fe0f")
+                .join("_")}.svg`}
+              loading="lazy"
+            />
+          </ImageListItem>
+        </div>
       );
     });
+  }
+
+  handleBulkDownloadMenuOpen(event: React.MouseEvent) {
+    event.preventDefault();
+    this.setState({
+      bulkDownloadMenu:
+        this.state.bulkDownloadMenu === undefined
+          ? {
+              mouseX: event.clientX - 2,
+              mouseY: event.clientY - 4,
+            }
+          : undefined,
+    });
+  }
+
+  async handleBulkDownload() {
+    const zip = new JSZip();
+    const photoZip = zip.folder(`${this.state.selectedLeftEmoji}`);
+
+    this.setState({ bulkDownloading: true });
+
+    for (
+      var i = 0;
+      i < this.state.emojiData[this.state.selectedLeftEmoji].length;
+      i++
+    ) {
+      const combo = this.state.emojiData[this.state.selectedLeftEmoji][i];
+      const comboBlob = (
+        await axios.get(
+          `https://nf7lx96qu3.execute-api.us-west-2.amazonaws.com?imageSource=${this.googleRequestUrl(
+            combo
+          )}`,
+          {
+            responseType: "blob",
+          }
+        )
+      ).data;
+      photoZip?.file(this.googleRequestUrlEmojiFilename(combo), comboBlob);
+    }
+
+    const archive = await zip.generateAsync({ type: "blob" });
+    saveAs(archive, `${this.state.selectedLeftEmoji}`);
+
+    this.setState({ bulkDownloadMenu: undefined, bulkDownloading: false });
   }
 }
 
@@ -324,6 +427,11 @@ interface EmojiCombo {
   leftEmoji: string;
   rightEmoji: string;
   date: string;
+}
+
+interface MouseCoordinates {
+  mouseX: number;
+  mouseY: number;
 }
 
 const knownSupportedEmoji = [
