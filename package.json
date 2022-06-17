@@ -12,7 +12,7 @@
     "@primer/octicons-react": "^17.3.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.5",
-    "@testing-library/user-event": "^14.2.0",
+    "@testing-library/user-event": "^14.2.1",
     "axios": "^0.27.2",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.0",
