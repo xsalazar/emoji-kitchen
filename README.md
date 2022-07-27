@@ -35,3 +35,9 @@ This tooling can be found in the [`./scripts`](./scripts) directory.
 The [output JSON file](./scripts/emojiOutput.json) is committed directly to this repository due to the extended nature of how long it takes to gather this information.
 
 The script allows for iteratively building on this saved data, so future emojis need only be added to the scraping algorithm and it will be partially added into the existing file.
+
+## Credit
+
+[Jennifer Daniel](https://twitter.com/jenniferdaniel) and collaborators designed the Emoji Kitchen combinations. 
+
+The official way to use them is the [Gboard app](https://play.google.com/store/apps/details?id=com.google.android.inputmethod.latin&gl=US) on Android.
