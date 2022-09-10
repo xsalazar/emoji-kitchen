@@ -435,6 +435,7 @@ interface MouseCoordinates {
 }
 
 const knownSupportedEmoji = [
+  "1fa84", // 🪄
   "1f600", // 😀
   "1f603", // 😃
   "1f604", // 😄
@@ -837,7 +838,6 @@ const knownSupportedEmoji = [
   "1f3b4", // 🎴
   "1f004", // 🀄
   "1f0cf", // 🃏
-  "1fa84", // 🪄
   "1f4f7", // 📷
   "1f3a8", // 🎨
   "1f58c-fe0f", // 🖌️
