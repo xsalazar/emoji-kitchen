@@ -7,7 +7,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
-    "@mui/lab": "^5.0.0-alpha.98",
+    "@mui/lab": "^5.0.0-alpha.99",
     "@mui/material": "^5.10.4",
     "@primer/octicons-react": "^17.5.0",
     "@testing-library/jest-dom": "^5.16.5",
