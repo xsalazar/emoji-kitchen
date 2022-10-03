@@ -12,9 +12,11 @@ var knownSupportedDates = [
   "20220406",
   "20220506",
   "20220815",
+  "20220823",
 ];
 
 var knownSupportedEmoji = [
+  "1fa84", // 🪄
   "1f600", // 😀
   "1f603", // 😃
   "1f604", // 😄
@@ -24,6 +26,7 @@ var knownSupportedEmoji = [
   "1f602", // 😂
   "1f923", // 🤣
   "1f62d", // 😭
+  "1f609", // 😉
   "1f617", // 😗
   "1f619", // 😙
   "1f61a", // 😚
@@ -32,47 +35,51 @@ var knownSupportedEmoji = [
   "1f60d", // 😍
   "1f929", // 🤩
   "1f973", // 🥳
-  "1f917", // 🤗
   "1f643", // 🙃
   "1f642", // 🙂
   "1f972", // 🥲
   "1f979", // 🥹
-  "263a-fe0f", // ☺️
-  "1f60a", // 😊
-  "1f60f", // 😏
-  "1f60c", // 😌
-  "1f609", // 😉
-  "1fae2", // 🫢
-  "1f92d", // 🤭
-  "1f636", // 😶
-  "1f610", // 😐
-  "1f611", // 😑
-  "1f614", // 😔
   "1f60b", // 😋
   "1f61b", // 😛
   "1f61d", // 😝
   "1f61c", // 😜
   "1f92a", // 🤪
+  "1f607", // 😇
+  "1f60a", // 😊
+  "263a-fe0f", // ☺️
+  "1f60f", // 😏
+  "1f60c", // 😌
+  "1f614", // 😔
+  "1f611", // 😑
+  "1f610", // 😐
+  "1f636", // 😶
   "1fae1", // 🫡
   "1f914", // 🤔
+  "1f92b", // 🤫
+  "1fae2", // 🫢
+  "1f92d", // 🤭
+  "1f971", // 🥱
+  "1f917", // 🤗
+  "1fae3", // 🫣
+  "1f631", // 😱
   "1f928", // 🤨
   "1f9d0", // 🧐
-  "1f644", // 🙄
   "1f612", // 😒
+  "1f644", // 🙄
+  "1f62e-200d-1f4a8", // 😮‍💨
   "1f624", // 😤
   "1f620", // 😠
   "1f621", // 😡
   "1f92c", // 🤬
+  "1f97a", // 🥺
+  "1f61f", // 😟
+  "1f625", // 😥
+  "1f622", // 😢
   "2639-fe0f", // ☹️
   "1f641", // 🙁
   "1fae4", // 🫤
   "1f615", // 😕
-  "1f61f", // 😟
-  "1f97a", // 🥺
-  "1f633", // 😳
-  "1f62c", // 😬
   "1f910", // 🤐
-  "1f92b", // 🤫
   "1f630", // 😰
   "1f628", // 😨
   "1f627", // 😧
@@ -80,41 +87,36 @@ var knownSupportedEmoji = [
   "1f62e", // 😮
   "1f62f", // 😯
   "1f632", // 😲
-  "1fae3", // 🫣
-  "1f631", // 😱
+  "1f633", // 😳
   "1f92f", // 🤯
-  "1f622", // 😢
-  "1f625", // 😥
+  "1f62c", // 😬
   "1f613", // 😓
   "1f61e", // 😞
-  "1f62e-200d-1f4a8", // 😮‍💨
   "1f616", // 😖
   "1f623", // 😣
   "1f629", // 😩
   "1f62b", // 😫
-  "1f924", // 🤤
-  "1f971", // 🥱
+  "1f635", // 😵
+  "1fae5", // 🫥
   "1f634", // 😴
   "1f62a", // 😪
+  "1f924", // 🤤
   "1f31b", // 🌛
   "1f31c", // 🌜
   "1f31a", // 🌚
   "1f31d", // 🌝
   "1f31e", // 🌞
+  "1fae0", // 🫠
+  "1f636-200d-1f32b-fe0f", // 😶‍🌫️
+  "1f974", // 🥴
+  "1f975", // 🥵
+  "1f976", // 🥶
   "1f922", // 🤢
   "1f92e", // 🤮
   "1f927", // 🤧
   "1f912", // 🤒
   "1f915", // 🤕
-  "1f974", // 🥴
-  "1fae0", // 🫠
-  "1f636-200d-1f32b-fe0f", // 😶‍🌫️
-  "1fae5", // 🫥
-  "1f635", // 😵
-  "1f975", // 🥵
-  "1f976", // 🥶
   "1f637", // 😷
-  "1f607", // 😇
   "1f920", // 🤠
   "1f911", // 🤑
   "1f60e", // 😎
@@ -129,6 +131,10 @@ var knownSupportedEmoji = [
   "1f383", // 🎃
   "1f608", // 😈
   "1f47f", // 👿
+  "1f525", // 🔥
+  "1f4ab", // 💫
+  "2b50", // ⭐
+  "1f31f", // 🌟
   "1f4a5", // 💥
   "1f4af", // 💯
   "1fae7", // 🫧
@@ -167,9 +173,9 @@ var knownSupportedEmoji = [
   "1f480", // 💀
   "1f440", // 👀
   "1f441-fe0f", // 👁️
+  "1fae6", // 🫦
   "1f44d", // 👍
   "1f937", // 🤷
-  "1fae6", // 🫦
   "1f490", // 💐
   "1f339", // 🌹
   "1f33a", // 🌺
@@ -198,19 +204,16 @@ var knownSupportedEmoji = [
   "1f32c-fe0f", // 🌬️
   "1f300", // 🌀
   "1f32a-fe0f", // 🌪️
-  "1f525", // 🔥
-  "2601-fe0f", // ☁️
   "1f30b", // 🌋
   "1f3d6-fe0f", // 🏖️
-  "26a1", // ⚡
   "26c5", // ⛅
-  "1f329-fe0f", // 🌩️
+  "2601-fe0f", // ☁️
   "1f327-fe0f", // 🌧️
+  "1f329-fe0f", // 🌩️
   "1f4a7", // 💧
+  "2602-fe0f", // ☂️
+  "26a1", // ⚡
   "1f308", // 🌈
-  "2b50", // ⭐
-  "1f31f", // 🌟
-  "1f4ab", // 💫
   "2604-fe0f", // ☄️
   "1fa90", // 🪐
   "1f30d", // 🌍
@@ -236,9 +239,9 @@ var knownSupportedEmoji = [
   "1f9a5", // 🦥
   "1f994", // 🦔
   "1f987", // 🦇
-  "1f426", // 🐦
-  "1f54a-fe0f", // 🕊
   "1f989", // 🦉
+  "1f426", // 🐦
+  "1f54a-fe0f", // 🕊️
   "1f9a9", // 🦩
   "1f427", // 🐧
   "1f41f", // 🐟
@@ -340,7 +343,7 @@ var knownSupportedEmoji = [
   "1f375", // 🍵
   "2615", // ☕
   "1f9c9", // 🧉
-  "1f379", //🍹
+  "1f379", // 🍹
   "1f37d-fe0f", // 🍽️
   "1f6d1", // 🛑
   "1f6a8", // 🚨
@@ -361,8 +364,8 @@ var knownSupportedEmoji = [
   "1f3df-fe0f", // 🏟️
   "1f3e0", // 🏠
   "1f3d5-fe0f", // 🏕️
-  "1f3dd-fe0f", // 🏝️
   "1f307", // 🌇
+  "1f3dd-fe0f", // 🏝️
   "1f388", // 🎈
   "1f380", // 🎀
   "1f381", // 🎁
@@ -372,7 +375,7 @@ var knownSupportedEmoji = [
   "1f948", // 🥈
   "1f949", // 🥉
   "1f3c5", // 🏅
-  "1f396-fe0f", // 🎖
+  "1f396-fe0f", // 🎖️
   "1f3c6", // 🏆
   "26bd", // ⚽
   "26be", // ⚾
@@ -417,7 +420,6 @@ var knownSupportedEmoji = [
   "1f3b4", // 🎴
   "1f004", // 🀄
   "1f0cf", // 🃏
-  "1fa84", // 🪄
   "1f4f7", // 📷
   "1f3a8", // 🎨
   "1f58c-fe0f", // 🖌️
@@ -446,15 +448,14 @@ var knownSupportedEmoji = [
   "260e-fe0f", // ☎️
   "1f50b", // 🔋
   "1faab", // 🪫
-  "1f4bf", // 💿
   "1f4be", // 💾
+  "1f4bf", // 💿
   "1f4b8", // 💸
   "2696-fe0f", // ⚖️
   "1f4a1", // 💡
   "1f9fc", // 🧼
   "1f9e6", // 🧦
   "1f451", // 👑
-  "2602-fe0f", // ☂️
   "1f48e", // 💎
   "1f6e0-fe0f", // 🛠️
   "26d3-fe0f", // ⛓️
@@ -465,9 +466,10 @@ var knownSupportedEmoji = [
   "1f4da", // 📚
   "1f5c3-fe0f", // 🗃️
   "1f4f0", // 📰
+  "1f4e3", // 📣
   "1f50e", // 🔎
-  "1f9ff", // 🧿
   "1f52e", // 🔮
+  "1f9ff", // 🧿
   "1f5dd-fe0f", // 🗝️
   "1f512", // 🔒
   "2648", // ♈
@@ -530,6 +532,42 @@ function googleRequestEmoji(emoji) {
     .join("-");
 }
 
+function sortOutputData(outputData) {
+  // Iterate through each key and sort the array of sub-values
+  Object.entries(outputData).forEach((kvp) => {
+    key = kvp[0];
+    values = kvp[1];
+
+    console.log(`Sorting ${printableEmoji(key)}`);
+
+    valuesWithSortOrder = values.map((v) => {
+      // Inner sort is always on the emoji that's _not_ the top-level emoji
+      sortCodePoint = v.leftEmoji === key ? v.rightEmoji : v.leftEmoji;
+
+      // Find the sort order from the reference list
+      sortOrder = knownSupportedEmoji.indexOf(sortCodePoint);
+
+      return { ...v, sortOrder: sortOrder };
+    });
+
+    sortedValues = valuesWithSortOrder
+      .sort((e1, e2) => {
+        return e1.sortOrder > e2.sortOrder ? 1 : -1;
+      })
+      .map((v) => {
+        return {
+          leftEmoji: v.leftEmoji,
+          rightEmoji: v.rightEmoji,
+          date: v.date,
+        };
+      });
+
+    outputData[key] = sortedValues;
+  });
+
+  return outputData;
+}
+
 async function getKitchenSink() {
   // Load up existing data, if any
   var outputData = JSON.parse(fs.readFileSync("emojiOutput.json"));
@@ -542,7 +580,7 @@ async function getKitchenSink() {
       var leftEmojiCodepoint = knownSupportedEmoji[i];
       var leftRequestEmoji = googleRequestEmoji(leftEmojiCodepoint);
 
-      // Check all the pairwise possibilites...
+      // Check all the pairwise possibilities...
       for (var j = 0; j < knownSupportedEmoji.length; j++) {
         var rightEmojiCodepoint = knownSupportedEmoji[j];
         var rightRequestEmoji = googleRequestEmoji(rightEmojiCodepoint);
@@ -625,8 +663,10 @@ async function getKitchenSink() {
     }
   }
 
+  sortedOutputData = sortOutputData(outputData);
+
   // Save generated data
-  fs.writeFileSync("emojiOutput.json", JSON.stringify(outputData));
+  fs.writeFileSync("emojiOutput.json", JSON.stringify(sortedOutputData));
 }
 
 getKitchenSink();
