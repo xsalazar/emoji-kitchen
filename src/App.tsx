@@ -1,4 +1,3 @@
-import React from "react";
 import Footer from "./Components/footer";
 import Kitchen from "./Components/kitchen";
 
