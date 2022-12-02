@@ -249,15 +249,17 @@ export default class Kitchen extends React.Component<
   // The ordering is important to ensure we select the correct date for the combo, since it's hardcoded into the request URL
   //
   // The .pop() will grab the last-most item in the list since it's possible for two emojis to have been revisited at a later date
-  // For example 🐢 + 👍 have two unique illustrations at `20220815` and `20220823`
+  // For example 🐢 + 👍 have two unique illustrations at `20220815` and `20220823` so we want the most recent illustration
   findValidEmojiCombo(leftEmoji: string, rightEmoji: string): EmojiCombo {
     const { emojiData } = this.state;
     return (
       emojiData[leftEmoji]
         .filter((c) => c.leftEmoji === leftEmoji && c.rightEmoji === rightEmoji)
+        .sort((a, b) => (a.date > b.date ? 1 : -1))
         .pop() ??
       emojiData[leftEmoji]
         .filter((c) => c.leftEmoji === rightEmoji && c.rightEmoji === leftEmoji)
+        .sort((a, b) => (a.date > b.date ? 1 : -1))
         .pop()!
     );
   }
