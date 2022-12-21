@@ -62,7 +62,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license MUI v5.10.16
+/** @license MUI v5.11.0
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
