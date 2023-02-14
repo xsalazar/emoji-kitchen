@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.11.0",
+    "@mui/icons-material": "^5.11.9",
     "@mui/lab": "^5.0.0-alpha.119",
     "@mui/material": "^5.11.9",
     "@primer/octicons-react": "^17.11.1",
