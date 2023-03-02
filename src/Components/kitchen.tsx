@@ -1,4 +1,5 @@
 import { ImageListItem, Box, Container, Menu, MenuItem } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { imageListItemClasses } from "@mui/material/ImageListItem";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -54,6 +55,18 @@ export default class Kitchen extends React.Component<
     var leftList;
     var middleList;
     var rightList;
+    const Emoji: React.FC<{ emoji: string }> = ({ emoji }) => (
+      <img
+        width="32px"
+        height="32px"
+        alt={emoji}
+        src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emoji
+          .split("-")
+          .filter((x) => x !== "fe0f")
+          .join("_")}.svg`}
+        loading="lazy"
+      />
+    );
 
     // Neither are selected, show left list, empty middle list, and disable right list
     if (selectedLeftEmoji === "" && selectedRightEmoji === "") {
@@ -79,15 +92,32 @@ export default class Kitchen extends React.Component<
         })
         .map((combo) => {
           return (
-            <ImageListItem key={`${combo.leftEmoji}_${combo.rightEmoji}`}>
-              <img
-                width="256px"
-                height="256px"
-                alt={`${combo.leftEmoji}_${combo.rightEmoji}`}
-                src={this.googleRequestUrl(combo)}
-                loading="lazy"
-              />
-            </ImageListItem>
+            <Tooltip
+              title={
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    fontSize: "16px",
+                  }}
+                >
+                  <Emoji emoji={combo.leftEmoji} />
+                  +
+                  <Emoji emoji={combo.rightEmoji} />
+                </Box>
+              }
+            >
+              <ImageListItem key={`${combo.leftEmoji}_${combo.rightEmoji}`}>
+                <img
+                  width="256px"
+                  height="256px"
+                  alt={`${combo.leftEmoji}_${combo.rightEmoji}`}
+                  src={this.googleRequestUrl(combo)}
+                  loading="lazy"
+                />
+              </ImageListItem>
+            </Tooltip>
           );
         });
 
