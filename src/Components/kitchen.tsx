@@ -81,11 +81,11 @@ export default class Kitchen extends React.Component<
           return (
             <ImageListItem key={`${combo.leftEmoji}_${combo.rightEmoji}`}>
               <img
+                loading="lazy"
                 width="256px"
                 height="256px"
                 alt={`${combo.leftEmoji}_${combo.rightEmoji}`}
                 src={this.googleRequestUrl(combo)}
-                loading="lazy"
               />
             </ImageListItem>
           );
@@ -374,6 +374,7 @@ export default class Kitchen extends React.Component<
             }}
           >
             <img
+              loading="lazy"
               width="32px"
               height="32px"
               alt={e}
@@ -381,7 +382,6 @@ export default class Kitchen extends React.Component<
                 .split("-")
                 .filter((x) => x !== "fe0f")
                 .join("_")}.svg`}
-              loading="lazy"
             />
           </ImageListItem>
         </div>
