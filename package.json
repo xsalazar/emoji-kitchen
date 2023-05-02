@@ -7,7 +7,7 @@
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
     "@mui/icons-material": "^5.11.16",
-    "@mui/lab": "^5.0.0-alpha.128",
+    "@mui/lab": "^5.0.0-alpha.129",
     "@mui/material": "^5.12.2",
     "@primer/octicons-react": "^18.3.0",
     "axios": "^1.4.0",
