@@ -5,7 +5,7 @@
   "homepage": "https://emojikitchen.dev",
   "dependencies": {
     "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.10.8",
+    "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.129",
     "@mui/material": "^5.13.0",
