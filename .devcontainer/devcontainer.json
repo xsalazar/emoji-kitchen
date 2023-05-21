@@ -1,7 +1,11 @@
 {
   "image": "node:18",
-  "extensions": [
-    "esbenp.prettier-vscode",
-    "streetsidesoftware.code-spell-checker"
-  ]
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
 }
