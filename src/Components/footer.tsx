@@ -36,7 +36,7 @@ export default class Footer extends React.Component {
             </Tooltip>
             <Tooltip title="Support Me">
               <Link
-                href="https://github.com/sponsors/xsalazar"
+                href="https://www.buymeacoffee.com/xsalazar"
                 color="textPrimary"
                 aria-label="Support Me"
                 target="_blank"
