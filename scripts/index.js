@@ -14,7 +14,10 @@ var knownSupportedDates = [
   "20220815",
   "20220823",
   "20221101",
+  "20221107",
   "20230126",
+  "20230301",
+  "20230405",
 ];
 
 var knownSupportedEmoji = [
