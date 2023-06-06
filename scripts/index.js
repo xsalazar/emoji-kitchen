@@ -568,7 +568,7 @@ function sortOutputData(outputData) {
 
     sortedValues = valuesWithSortOrder
       .sort((e1, e2) => {
-        return e1.sortOrder > e2.sortOrder ? 1 : -1;
+        return e1.sortOrder - e2.sortOrder || e1.date.localeCompare(e2.date);
       })
       .map((v) => {
         return {
