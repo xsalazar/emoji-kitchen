@@ -3,7 +3,14 @@ import Kitchen from "./Components/kitchen";
 
 function App() {
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100dvh",
+        maxHeight: "100dvh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <Kitchen />
       <Footer />
     </div>

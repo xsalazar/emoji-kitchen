@@ -126,122 +126,129 @@ export default class Kitchen extends React.Component<
     }
 
     return (
-      <div style={{ height: "calc(100vh - 200px)" }}>
-        <Container maxWidth="xl">
-          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-            {/* Left Emoji List */}
-
-            <Box
-              sx={{
-                height: "calc(100vh - 200px)",
-                overflowY: "auto",
-                justifyItems: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "repeat(3, 1fr)",
-                    sm: "repeat(5, 1fr)",
-                    md: "repeat(7, 1fr)",
-                    lg: "repeat(9, 1fr)",
-                    xl: "repeat(10, 1fr)",
-                  },
-                  [`& .${imageListItemClasses.root}`]: {
-                    display: "flex",
-                  },
-                }}
-              >
-                {leftList}
-              </Box>
-
-              {/* Bulk Download Menu */}
-              {selectedLeftEmoji !== "" ? (
-                <Menu
-                  open={bulkDownloadMenu !== undefined}
-                  onClose={() => {
-                    this.setState({ bulkDownloadMenu: undefined });
-                  }}
-                  anchorReference="anchorPosition"
-                  anchorPosition={
-                    bulkDownloadMenu !== undefined
-                      ? {
-                          top: bulkDownloadMenu.mouseY,
-                          left: bulkDownloadMenu.mouseX,
-                        }
-                      : undefined
-                  }
-                >
-                  <MenuItem>
-                    <LoadingButton
-                      loading={bulkDownloading}
-                      loadingPosition="start"
-                      startIcon={<DownloadIcon fontSize="small" />}
-                      onClick={this.handleBulkDownload}
-                    >
-                      Bulk Download
-                    </LoadingButton>
-                  </MenuItem>
-                </Menu>
-              ) : undefined}
-            </Box>
-
-            {/* Middle Combination List */}
-            <Box
-              sx={{
-                mx: 3,
-                height: "calc(100vh - 200px)",
-                overflowY: "auto",
-                justifyItems: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "repeat(1, 1fr)",
-                    sm: "repeat(2, 1fr)",
-                    md: "repeat(3, 1fr)",
-                  },
-                  [`& .${imageListItemClasses.root}`]: {
-                    display: "flex",
-                  },
-                }}
-              >
-                {middleList}
-              </Box>
-            </Box>
-
-            {/* Right Emoji List */}
-            <Box
-              sx={{
-                height: "calc(100vh - 200px)",
-                overflowY: "auto",
-                justifyItems: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns: {
-                    xs: "repeat(3, 1fr)",
-                    sm: "repeat(5, 1fr)",
-                    md: "repeat(7, 1fr)",
-                    lg: "repeat(9, 1fr)",
-                    xl: "repeat(10, 1fr)",
-                  },
-                  [`& .${imageListItemClasses.root}`]: {
-                    display: "flex",
-                  },
-                }}
-              >
-                {rightList}
-              </Box>
-            </Box>
+      <Container
+        maxWidth="xl"
+        sx={{
+          flexGrow: "1",
+          display: "flex",
+          flexDirection: "row",
+          overflowY: "scroll",
+          mt: 1,
+        }}
+      >
+        {/* Left Emoji List */}
+        <Box
+          sx={{
+            overflowY: "auto",
+            justifyItems: "center",
+            flexGrow: "1",
+            width: "33%",
+          }}
+        >
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(3, 1fr)",
+                sm: "repeat(5, 1fr)",
+                md: "repeat(7, 1fr)",
+                lg: "repeat(9, 1fr)",
+                xl: "repeat(10, 1fr)",
+              },
+              [`& .${imageListItemClasses.root}`]: {
+                display: "flex",
+              },
+            }}
+          >
+            {leftList}
           </Box>
-        </Container>
-      </div>
+
+          {/* Bulk Download Menu */}
+          {selectedLeftEmoji !== "" ? (
+            <Menu
+              open={bulkDownloadMenu !== undefined}
+              onClose={() => {
+                this.setState({ bulkDownloadMenu: undefined });
+              }}
+              anchorReference="anchorPosition"
+              anchorPosition={
+                bulkDownloadMenu !== undefined
+                  ? {
+                      top: bulkDownloadMenu.mouseY,
+                      left: bulkDownloadMenu.mouseX,
+                    }
+                  : undefined
+              }
+            >
+              <MenuItem>
+                <LoadingButton
+                  loading={bulkDownloading}
+                  loadingPosition="start"
+                  startIcon={<DownloadIcon fontSize="small" />}
+                  onClick={this.handleBulkDownload}
+                >
+                  Bulk Download
+                </LoadingButton>
+              </MenuItem>
+            </Menu>
+          ) : undefined}
+        </Box>
+
+        {/* Middle Combination List */}
+        <Box
+          sx={{
+            mx: 3,
+            overflowY: "auto",
+            justifyItems: "center",
+            flexGrow: "1",
+            width: "33%",
+          }}
+        >
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(1, 1fr)",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+              },
+              [`& .${imageListItemClasses.root}`]: {
+                display: "flex",
+              },
+            }}
+          >
+            {middleList}
+          </Box>
+        </Box>
+
+        {/* Right Emoji List */}
+        <Box
+          sx={{
+            overflowY: "auto",
+            justifyItems: "center",
+            flexGrow: "1",
+            width: "33%",
+          }}
+        >
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "repeat(3, 1fr)",
+                sm: "repeat(5, 1fr)",
+                md: "repeat(7, 1fr)",
+                lg: "repeat(9, 1fr)",
+                xl: "repeat(10, 1fr)",
+              },
+              [`& .${imageListItemClasses.root}`]: {
+                display: "flex",
+              },
+            }}
+          >
+            {rightList}
+          </Box>
+        </Box>
+      </Container>
     );
   }
 
