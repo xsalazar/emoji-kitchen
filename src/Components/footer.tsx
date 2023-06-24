@@ -1,8 +1,8 @@
 import { Box, Link, Stack, Tooltip } from "@mui/material";
 import {
   FileCodeIcon,
+  LinkExternalIcon,
   MentionIcon,
-  SponsorTiersIcon,
 } from "@primer/octicons-react";
 import React from "react";
 
@@ -34,15 +34,15 @@ export default class Footer extends React.Component {
                 <FileCodeIcon size="small" verticalAlign="middle" />
               </Link>
             </Tooltip>
-            <Tooltip title="Support Me">
+            <Tooltip title="Learn More">
               <Link
-                href="https://www.buymeacoffee.com/xsalazar"
+                href="https://www.emojipedia.org/emoji-kitchen/"
                 color="textPrimary"
-                aria-label="Support Me"
+                aria-label="Learn More"
                 target="_blank"
                 rel="noopener"
               >
-                <SponsorTiersIcon size="small" verticalAlign="middle" />
+                <LinkExternalIcon size="small" verticalAlign="middle" />
               </Link>
             </Tooltip>
           </Stack>
