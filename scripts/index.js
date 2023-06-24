@@ -2,22 +2,22 @@ var axios = require("axios");
 var fs = require("fs");
 
 var knownSupportedDates = [
-  // "20201001",
-  // "20210218",
-  // "20210521",
-  // "20210831",
-  // "20211115",
-  // "20220110",
-  // "20220203",
-  // "20220406",
-  // "20220506",
-  // "20220815",
-  // "20220823",
-  // "20221101",
-  // "20221107",
-  // "20230126",
-  // "20230301",
-  // "20230405",
+  "20201001",
+  "20210218",
+  "20210521",
+  "20210831",
+  "20211115",
+  "20220110",
+  "20220203",
+  "20220406",
+  "20220506",
+  "20220815",
+  "20220823",
+  "20221101",
+  "20221107",
+  "20230126",
+  "20230301",
+  "20230405",
   "20230418",
   "20230426",
 ];
@@ -649,32 +649,6 @@ async function getKitchenSink() {
       for (var j = 0; j < knownSupportedEmoji.length; j++) {
         var rightEmojiCodepoint = knownSupportedEmoji[j];
         var rightRequestEmoji = googleRequestEmoji(rightEmojiCodepoint);
-
-        // If either half isn't the half we care about
-        if (
-          ![
-            "1f940", // 🥀
-            "1f3de-fe0f", // 🏞️
-            "1fada", // 🫚
-            "1f96c", // 🥬
-            "1fadb", // 🫛
-            "1f953", // 🥓
-            "1f967", // 🥧
-            "1f964", // 🥤
-          ].includes(leftEmojiCodepoint) &&
-          ![
-            "1f940", // 🥀
-            "1f3de-fe0f", // 🏞️
-            "1fada", // 🫚
-            "1f96c", // 🥬
-            "1fadb", // 🫛
-            "1f953", // 🥓
-            "1f967", // 🥧
-            "1f964", // 🥤
-          ].includes(rightEmojiCodepoint)
-        ) {
-          continue;
-        }
 
         // ...unless we've already found this pair in the past
         if (
