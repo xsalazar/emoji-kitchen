@@ -132,7 +132,7 @@ export default class Kitchen extends React.Component<
           flexGrow: "1",
           display: "flex",
           flexDirection: "row",
-          overflowY: "scroll",
+          overflowY: "auto",
           mt: 1,
         }}
       >
