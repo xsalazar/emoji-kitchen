@@ -193,6 +193,7 @@ var knownSupportedEmoji = [
   "1f33a", // 🌺
   "1f337", // 🌷
   "1f338", // 🌸
+  "1fab7", // 🪷
   "1f4ae", // 💮
   "1f3f5-fe0f", // 🏵️
   "1fabb", // 🪻
@@ -229,8 +230,9 @@ var knownSupportedEmoji = [
   "26a1", // ⚡
   "1f308", // 🌈
   "2604-fe0f", // ☄️
-  "1fa90", // 🪐
+  "1f30c", // 🌌
   "1f30d", // 🌍
+  "1fa90", // 🪐
   "1f648", // 🙈
   "1f435", // 🐵
   "1f981", // 🦁
@@ -319,6 +321,7 @@ var knownSupportedEmoji = [
   "1fad3", // 🫓
   "1f950", // 🥐
   "1f96f", // 🥯
+  "1f9c7", // 🧇
   "1f95e", // 🥞
   "1f373", // 🍳
   "1f9c0", // 🧀
@@ -373,6 +376,7 @@ var knownSupportedEmoji = [
   "2615", // ☕
   "1f9c9", // 🧉
   "1f379", // 🍹
+  "1f376", // 🍶
   "1f962", // 🥢
   "1f37d-fe0f", // 🍽️
   "1f6d1", // 🛑
@@ -484,6 +488,8 @@ var knownSupportedEmoji = [
   "1f4f1", // 📱
   "260e-fe0f", // ☎️
   "1f4df", // 📟
+  "1f4e0", // 📠
+  "1f50c", // 🔌
   "1f50b", // 🔋
   "1faab", // 🪫
   "1f4be", // 💾
@@ -527,6 +533,7 @@ var knownSupportedEmoji = [
   "1f4c9", // 📉
   "2702-fe0f", // ✂️
   "1f4f0", // 📰
+  "231b", // ⌛
   "23f3", // ⏳
   "23f0", // ⏰
   "1f514", // 🔔
@@ -649,6 +656,30 @@ async function getKitchenSink() {
       for (var j = 0; j < knownSupportedEmoji.length; j++) {
         var rightEmojiCodepoint = knownSupportedEmoji[j];
         var rightRequestEmoji = googleRequestEmoji(rightEmojiCodepoint);
+
+        // If either half isn't the half we care about
+        if (
+          ![
+            "1fab7", // 🪷
+            "1f30c", // 🌌
+            "1f9c7", // 🧇
+            "1f376", // 🍶
+            "1f4e0", // 📠
+            "1f50c", // 🔌
+            "231b", // ⌛
+          ].includes(leftEmojiCodepoint) &&
+          ![
+            "1fab7", // 🪷
+            "1f30c", // 🌌
+            "1f9c7", // 🧇
+            "1f376", // 🍶
+            "1f4e0", // 📠
+            "1f50c", // 🔌
+            "231b", // ⌛
+          ].includes(rightEmojiCodepoint)
+        ) {
+          continue;
+        }
 
         // ...unless we've already found this pair in the past
         if (
