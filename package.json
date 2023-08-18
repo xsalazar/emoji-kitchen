@@ -9,7 +9,7 @@
     "@mui/icons-material": "^5.14.3",
     "@mui/lab": "^5.0.0-alpha.140",
     "@mui/material": "^5.14.4",
-    "@primer/octicons-react": "^19.5.0",
+    "@primer/octicons-react": "^19.6.0",
     "axios": "^1.4.0",
     "eslint-config-react-app": "^7.0.1",
     "file-saver": "^2.0.5",
