@@ -1,6 +1,6 @@
 # 🧑‍🍳 Emoji Kitchen
 
-This repository contains the source code for the website [https://emojikitchen.dev](https://emojikitchen.dev) and was bootstrapped using [`create-react-app`](https://github.com/facebook/create-react-app).
+This repository contains the source code for the website [https://emojikitchen.dev](https://emojikitchen.dev).
 
 This website allows for quick and easy browsing of the comprehensive list of supported emoji mashups as part of Google's [Emoji Kitchen](https://emojipedia.org/emoji-kitchen/).
 

@@ -3,27 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://emojikitchen.dev",
-  "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.6",
-    "@mui/lab": "^5.0.0-alpha.142",
-    "@mui/material": "^5.14.6",
-    "@primer/octicons-react": "^19.6.0",
-    "axios": "^1.5.0",
-    "eslint-config-react-app": "^7.0.1",
-    "file-saver": "^2.0.5",
-    "jszip": "^3.10.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -44,8 +27,24 @@
     ]
   },
   "devDependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.8",
+    "@mui/lab": "^5.0.0-alpha.143",
+    "@mui/material": "^5.14.8",
+    "@primer/octicons-react": "^19.7.0",
     "@types/file-saver": "^2.0.5",
     "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7"
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.4",
+    "axios": "^1.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vite-tsconfig-paths": "^4.2.0"
   }
 }

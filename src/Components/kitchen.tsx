@@ -6,7 +6,7 @@ import React from "react";
 import JSZip from "jszip";
 import axios from "axios";
 import saveAs from "file-saver";
-const emojiData: EmojiData = require("./emojiData.json");
+import emojiData from "./emojiData.json";
 
 interface KitchenProps {}
 
@@ -30,7 +30,7 @@ export default class Kitchen extends React.Component<
     this.state = {
       selectedLeftEmoji: "",
       selectedRightEmoji: "",
-      emojiData: emojiData,
+      emojiData: emojiData as EmojiData,
       bulkDownloadMenu: undefined,
       bulkDownloading: false,
     };
@@ -54,6 +54,7 @@ export default class Kitchen extends React.Component<
     var leftList;
     var middleList;
     var rightList;
+    var showOneCombo = false;
 
     // Neither are selected, show left list, empty middle list, and disable right list
     if (selectedLeftEmoji === "" && selectedRightEmoji === "") {
@@ -99,6 +100,7 @@ export default class Kitchen extends React.Component<
     }
     // Both are selected, show the single combo
     else {
+      showOneCombo = true;
       var combo = this.findValidEmojiCombo(
         selectedLeftEmoji,
         selectedRightEmoji
@@ -209,8 +211,8 @@ export default class Kitchen extends React.Component<
               display: "grid",
               gridTemplateColumns: {
                 xs: "repeat(1, 1fr)",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
+                sm: showOneCombo ? "repeat(1, 1fr)" : "repeat(2, 1fr)",
+                md: showOneCombo ? "repeat(1, 1fr)" : "repeat(3, 1fr)",
               },
               [`& .${imageListItemClasses.root}`]: {
                 display: "flex",

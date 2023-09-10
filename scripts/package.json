@@ -1,14 +1,17 @@
 {
-  "name": "the-emoji-kitchen",
+  "name": "emoji-kitchen-helper",
   "version": "1.0.0",
   "description": "",
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^1.5.0"
+  "devDependencies": {
+    "axios": "^1.5.0",
+    "axios-retry": "^3.7.0",
+    "p-limit": "^4.0.0"
   }
 }
