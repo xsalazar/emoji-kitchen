@@ -15,7 +15,7 @@ This repository leverages [VSCode's devcontainer](https://code.visualstudio.com/
 To get started:
 
 ```bash
-npm init && npm start
+npm install && npm start
 ```
 
 This will start the application on your local machine, running on [http://localhost:3000/](http://localhost:3000).
