@@ -893,6 +893,7 @@ async function getKitchenSink() {
         var rightRequestEmoji = toGoogleRequestEmoji(rightEmojiCodepoint);
 
         if (
+          emojiOfInterest.length > 0 &&
           !(
             emojiOfInterest.includes(leftEmojiCodepoint) ||
             emojiOfInterest.includes(rightEmojiCodepoint)
