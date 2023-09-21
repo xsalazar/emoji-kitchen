@@ -46,6 +46,8 @@ var knownSupportedDates = [
   "20230426",
   "20230613",
   "20230803",
+  "20230818",
+  "20230821",
 ];
 
 var knownSupportedEmoji = [
@@ -162,6 +164,8 @@ var knownSupportedEmoji = [
   "1f47d", // 👽
   "1f47e", // 👾
   "1f916", // 🤖
+  "1f479", // 👹
+  "1f47a", // 👺
   "1f383", // 🎃
   "1f608", // 😈
   "1f47f", // 👿
@@ -201,6 +205,10 @@ var knownSupportedEmoji = [
   "1f494", // 💔
   "1f48b", // 💋
   "1fac2", // 🫂
+  "1f464", // 👤
+  "1f465", // 👥
+  "1f5e3-fe0f", // 🗣️
+  "1f463", // 👣
   "1f9e0", // 🧠
   "1fac0", // 🫀
   "1fac1", // 🫁
@@ -211,6 +219,7 @@ var knownSupportedEmoji = [
   "1f480", // 💀
   "1f440", // 👀
   "1f441-fe0f", // 👁️
+  "1f444", // 👄
   "1fae6", // 🫦
   "1f44d", // 👍
   "1f937", // 🤷
@@ -226,8 +235,10 @@ var knownSupportedEmoji = [
   "1fabb", // 🪻
   "1f33b", // 🌻
   "1f33c", // 🌼
+  "1f342", // 🍂
   "1f341", // 🍁
   "1f344", // 🍄
+  "1f33e", // 🌾
   "1f331", // 🌱
   "1f33f", // 🌿
   "1f343", // 🍃
@@ -238,6 +249,8 @@ var knownSupportedEmoji = [
   "1f333", // 🌳
   "1f332", // 🌲
   "1fab9", // 🪹
+  "26f0-fe0f", // ⛰️
+  "1f3d4-fe0f", // 🏔️
   "1fab5", // 🪵
   "1faa8", // 🪨
   "26c4", // ⛄
@@ -314,6 +327,7 @@ var knownSupportedEmoji = [
   "1f43e", // 🐾
   "1f353", // 🍓
   "1f352", // 🍒
+  "1f34e", // 🍎
   "1f349", // 🍉
   "1f34a", // 🍊
   "1f96d", // 🥭
@@ -355,6 +369,7 @@ var knownSupportedEmoji = [
   "1f9c0", // 🧀
   "1f953", // 🥓
   "1f969", // 🥩
+  "1f357", // 🍗
   "1f356", // 🍖
   "1f354", // 🍔
   "1f32d", // 🌭
@@ -380,60 +395,93 @@ var knownSupportedEmoji = [
   "1f961", // 🥡
   "1f35a", // 🍚
   "1f371", // 🍱
+  "1f95f", // 🥟
+  "1f362", // 🍢
   "1f359", // 🍙
   "1f358", // 🍘
   "1f365", // 🍥
+  "1f361", // 🍡
   "1f960", // 🥠
   "1f367", // 🍧
   "1f368", // 🍨
   "1f366", // 🍦
   "1f967", // 🥧
   "1f370", // 🍰
+  "1f36e", // 🍮
   "1f382", // 🎂
   "1f9c1", // 🧁
+  "1f36d", // 🍭
   "1f36c", // 🍬
   "1f36b", // 🍫
   "1f369", // 🍩
   "1f36a", // 🍪
+  "1f36f", // 🍯
   "1f9c2", // 🧂
+  "1f9c8", // 🧈
   "1f37f", // 🍿
   "1f964", // 🥤
   "1f9cb", // 🧋
+  "1f9c3", // 🧃
+  "1f95b", // 🥛
   "1f37c", // 🍼
   "1f375", // 🍵
   "2615", // ☕
+  "1fad6", // 🫖
   "1f9c9", // 🧉
+  "1f942", // 🥂
+  "1f37e", // 🍾
+  "1f377", // 🍷
+  "1fad7", // 🫗
   "1f379", // 🍹
   "1f376", // 🍶
   "1f962", // 🥢
   "1f37d-fe0f", // 🍽️
   "1f6d1", // 🛑
+  "1f6a7", // 🚧
   "1f6a8", // 🚨
+  "26fd", // ⛽
   "1f6df", // 🛟
   "2693", // ⚓
+  "1f687", // 🚇
+  "1f6a6", // 🚦
+  "1f6f4", // 🛴
+  "1f6b2", // 🚲
+  "1f3cd-fe0f", // 🏍️
   "1f697", // 🚗
+  "1f69a", // 🚚
+  "1f69b", // 🚛
+  "1f69c", // 🚜
   "1f3ce-fe0f", // 🏎️
   "1f695", // 🚕
   "1f68c", // 🚌
   "1f682", // 🚂
   "1f6f6", // 🛶
+  "1f6a0", // 🚠
+  "1f6a1", // 🚡
   "1f6f8", // 🛸
   "1f680", // 🚀
   "2708-fe0f", // ✈️
   "1f3a2", // 🎢
   "1f3a1", // 🎡
+  "1f3a0", // 🎠
   "1f3aa", // 🎪
+  "1f5fc", // 🗼
+  "1f5ff", // 🗿
   "1f3db-fe0f", // 🏛️
+  "1f3f0", // 🏰
   "1f3df-fe0f", // 🏟️
+  "1f3da-fe0f", // 🏚️
   "1f3e0", // 🏠
   "1f3d5-fe0f", // 🏕️
   "1f307", // 🌇
   "1f3dd-fe0f", // 🏝️
+  "1f6e3-fe0f", // 🛣️
   "1f9f3", // 🧳
   "1f388", // 🎈
   "1f380", // 🎀
   "1f381", // 🎁
   "1f386", // 🎆
+  "1fa94", // 🪔
   "1faa9", // 🪩
   "1f397-fe0f", // 🎗️
   "1f947", // 🥇
@@ -469,6 +517,7 @@ var knownSupportedEmoji = [
   "1f94f", // 🥏
   "1fa83", // 🪃
   "1fa81", // 🪁
+  "1f3a3", // 🎣
   "1f93f", // 🤿
   "1f3bd", // 🎽
   "1f94b", // 🥋
@@ -500,6 +549,8 @@ var knownSupportedEmoji = [
   "1f3bb", // 🎻
   "1fa98", // 🪘
   "1f941", // 🥁
+  "1fa87", // 🪇
+  "1fa88", // 🪈
   "1fa97", // 🪗
   "1f3a4", // 🎤
   "1f3a7", // 🎧
@@ -526,18 +577,29 @@ var knownSupportedEmoji = [
   "1f5a8-fe0f", // 🖨️
   "1f4b8", // 💸
   "2696-fe0f", // ⚖️
+  "1f6d2", // 🛒
+  "1f6cd-fe0f", // 🛍️
   "1f4a1", // 💡
+  "1f9f1", // 🧱
   "1f6cb-fe0f", // 🛋️
   "1f9f9", // 🧹
   "1f9fc", // 🧼
   "1fa92", // 🪒
   "1faae", // 🪮
+  "1f9fa", // 🧺
   "1f9e6", // 🧦
+  "1f455", // 👕
+  "1f457", // 👗
   "1f393", // 🎓
+  "1f452", // 👒
   "1f451", // 👑
+  "1faad", // 🪭
+  "1f45c", // 👜
   "1f48d", // 💍
   "1f48e", // 💎
   "1f460", // 👠
+  "1f45f", // 👟
+  "1f97f", // 🥿
   "1f9ea", // 🧪
   "1f321-fe0f", // 🌡️
   "1fa7a", // 🩺
@@ -547,6 +609,7 @@ var knownSupportedEmoji = [
   "1f9f2", // 🧲
   "1f6e0-fe0f", // 🛠️
   "26cf-fe0f", // ⛏️
+  "2699-fe0f", // ⚙️
   "26d3-fe0f", // ⛓️
   "1f587-fe0f", // 🖇️
   "1f4cf", // 📏
@@ -561,6 +624,10 @@ var knownSupportedEmoji = [
   "1f4c9", // 📉
   "2702-fe0f", // ✂️
   "1f4f0", // 📰
+  "1f4e6", // 📦
+  "1f5f3-fe0f", // 🗳️
+  "231a", // ⌚
+  "1f570-fe0f", // 🕰️
   "231b", // ⌛
   "23f3", // ⏳
   "23f0", // ⏰
@@ -569,6 +636,7 @@ var knownSupportedEmoji = [
   "1f50e", // 🔎
   "1f52e", // 🔮
   "1f9ff", // 🧿
+  "1f3fa", // 🏺
   "1faa4", // 🪤
   "1f5dd-fe0f", // 🗝️
   "1f512", // 🔒
@@ -589,8 +657,11 @@ var knownSupportedEmoji = [
   "2753", // ❓
   "2049-fe0f", // ⁉️
   "1f198", // 🆘
+  "2668-fe0f", // ♨️
   "1f4f4", // 📴
   "1f508", // 🔈
+  "2622-fe0f", // ☢️
+  "2623-fe0f", // ☣️
   "26a0-fe0f", // ⚠️
   "267b-fe0f", // ♻️
   "2705", // ✅
@@ -599,6 +670,7 @@ var knownSupportedEmoji = [
   "1f199", // 🆙
   "1f197", // 🆗
   "1f192", // 🆒
+  "1f522", // 🔢
   "1f6ae", // 🚮
   "262e-fe0f", // ☮️
   "262f-fe0f", // ☯️
@@ -617,6 +689,12 @@ var knownSupportedEmoji = [
   "1f5ef-fe0f", // 🗯️
   "1f4ac", // 💬
 ];
+
+var emojiOfInterest = [
+  "1f342", // 🍂
+];
+
+var shouldPruneData = false;
 
 // Potential formats are ${rootUrl}/${potentialDate}/${leftEmoji}/${leftEmoji}_${rightEmoji}.png
 var rootUrl = "https://www.gstatic.com/android/keyboard/emojikitchen";
@@ -795,8 +873,10 @@ async function getKitchenSink() {
     outputData = JSON.parse(fs.readFileSync("emojiOutput.json"));
   }
 
-  // Prune the old data just for good measure
-  outputData = await pruneData(outputData);
+  if (shouldPruneData) {
+    // Prune the old data just for good measure
+    outputData = await pruneData(outputData);
+  }
 
   // There's no real pattern to the dates the images are found at, so try all the ones I know about
   for (var d = 0; d < knownSupportedDates.length; d++) {
@@ -811,6 +891,15 @@ async function getKitchenSink() {
       for (var j = 0; j < knownSupportedEmoji.length; j++) {
         var rightEmojiCodepoint = knownSupportedEmoji[j];
         var rightRequestEmoji = toGoogleRequestEmoji(rightEmojiCodepoint);
+
+        if (
+          !(
+            emojiOfInterest.includes(leftEmojiCodepoint) ||
+            emojiOfInterest.includes(rightEmojiCodepoint)
+          )
+        ) {
+          continue;
+        }
 
         requests.push(
           limit(
