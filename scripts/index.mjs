@@ -690,9 +690,7 @@ var knownSupportedEmoji = [
   "1f4ac", // 💬
 ];
 
-var emojiOfInterest = [
-  "1f342", // 🍂
-];
+var emojiOfInterest = [];
 
 var shouldPruneData = false;
 
