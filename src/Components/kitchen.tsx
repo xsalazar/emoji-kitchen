@@ -390,6 +390,7 @@ export default class Kitchen extends React.Component<
               src={`https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${e
                 .split("-")
                 .filter((x) => x !== "fe0f")
+                .map((x) => x.padStart(4, "0")) // Handle ©️ and ®️
                 .join("_")}.svg`}
             />
           </ImageListItem>
@@ -1090,8 +1091,8 @@ var knownSupportedEmoji = [
   "27b0", // ➰
   "27bf", // ➿
   "3030-fe0f", // 〰️
-  "00a9-fe0f", // ©️
-  "00ae-fe0f", // ®️
+  "a9-fe0f", // ©️
+  "ae-fe0f", // ®️
   "2122-fe0f", // ™️
   "2660-fe0f", // ♠️
   "1f5ef-fe0f", // 🗯️

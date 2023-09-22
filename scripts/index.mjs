@@ -682,8 +682,8 @@ var knownSupportedEmoji = [
   "27b0", // ➰
   "27bf", // ➿
   "3030-fe0f", // 〰️
-  "00a9-fe0f", // ©️
-  "00ae-fe0f", // ®️
+  "a9-fe0f", // ©️
+  "ae-fe0f", // ®️
   "2122-fe0f", // ™️
   "2660-fe0f", // ♠️
   "1f5ef-fe0f", // 🗯️
@@ -890,6 +890,7 @@ async function getKitchenSink() {
         var rightEmojiCodepoint = knownSupportedEmoji[j];
         var rightRequestEmoji = toGoogleRequestEmoji(rightEmojiCodepoint);
 
+        // If we're only trying to run this on a targeted list of emoji
         if (
           emojiOfInterest.length > 0 &&
           !(
@@ -897,6 +898,24 @@ async function getKitchenSink() {
             emojiOfInterest.includes(rightEmojiCodepoint)
           )
         ) {
+          continue;
+        }
+
+        // If we've already found this pair in the past
+        if (
+          leftEmojiCodepoint in outputData &&
+          outputData[leftEmojiCodepoint].some(
+            (x) =>
+              x.leftEmoji === leftEmojiCodepoint &&
+              x.rightEmoji === rightEmojiCodepoint &&
+              x.date === date
+          )
+        ) {
+          console.log(
+            `Skipping request for ${printableEmoji(
+              leftEmojiCodepoint
+            )} x ${printableEmoji(rightEmojiCodepoint)}`
+          );
           continue;
         }
 
