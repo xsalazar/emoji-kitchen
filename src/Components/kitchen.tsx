@@ -24,6 +24,7 @@ export default class Kitchen extends React.Component<
   KitchenProps,
   KitchenState
 > {
+  private rightListRef: React.RefObject<Element>;
   constructor(props: KitchenProps) {
     super(props);
 
@@ -35,6 +36,7 @@ export default class Kitchen extends React.Component<
       bulkDownloading: false,
     };
 
+    this.rightListRef = React.createRef();
     this.handleLeftEmojiClicked = this.handleLeftEmojiClicked.bind(this);
     this.handleRightEmojiClicked = this.handleRightEmojiClicked.bind(this);
     this.handleBulkDownloadMenuOpen =
@@ -80,7 +82,21 @@ export default class Kitchen extends React.Component<
         })
         .map((combo) => {
           return (
-            <ImageListItem key={`${combo.leftEmoji}_${combo.rightEmoji}`}>
+            <ImageListItem
+                key={`${combo.leftEmoji}_${combo.rightEmoji}`}
+                onClick={() => {
+                    const otherEmoji = combo.leftEmoji === selectedLeftEmoji ? combo.rightEmoji : combo.leftEmoji;
+                    const element = this.rightListRef.current?.querySelector(`[alt="${otherEmoji}"]`)?.parentElement;
+                    element?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                    element?.animate([
+                        {background: '#007fff00'}, {background: '#007fff9f'}, {background: '#007fff3f'}, {background: '#007fff9f'},
+                        {background: '#007fff3f'}, {background: '#007fff9f'}, {background: '#007fff00'}
+                        ], 3000);
+                }}
+            >
               <img
                 loading="lazy"
                 width="256px"
@@ -246,6 +262,7 @@ export default class Kitchen extends React.Component<
                 display: "flex",
               },
             }}
+            ref={this.rightListRef}
           >
             {rightList}
           </Box>
