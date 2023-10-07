@@ -367,7 +367,7 @@ export default function Kitchen() {
         <Typography
           sx={{
             textAlign: "center",
-            fontFamily: "'Noto Emoji', sans-serif",
+            fontFamily: "Noto Emoji, Apple Color Emoji, sans-serif",
             height: "24px",
           }}
         >

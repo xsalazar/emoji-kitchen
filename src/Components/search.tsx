@@ -188,7 +188,7 @@ export default function Search({
             <Typography
               sx={{
                 textAlign: "center",
-                fontFamily: "'Noto Emoji', sans-serif",
+                fontFamily: "Noto Emoji, Apple Color Emoji, sans-serif",
                 height: "24px",
                 width: "24px",
               }}
@@ -257,7 +257,7 @@ export default function Search({
           <Typography
             sx={{
               textAlign: "center",
-              fontFamily: "'Noto Emoji', sans-serif",
+              fontFamily: "Noto Emoji, Apple Color Emoji, sans-serif",
               height: "24px",
               width: "24px",
             }}
