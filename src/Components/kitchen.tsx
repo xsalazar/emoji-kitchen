@@ -1,473 +1,470 @@
+import React, { useState } from "react";
 import {
   ImageListItem,
   Box,
   Container,
-  Menu,
-  MenuItem,
-  Fab,
-  BottomNavigation,
-  BottomNavigationAction,
-  Paper,
   Typography,
-  Input,
+  IconButton,
+  Menu,
+  Fab,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { imageListItemClasses } from "@mui/material/ImageListItem";
-import {
-  Restore,
-  Download,
-  Favorite,
-  LocationOn,
-  Search,
-} from "@mui/icons-material";
-import React from "react";
+import { Download, ContentCopy } from "@mui/icons-material";
 import JSZip from "jszip";
-import axios from "axios";
 import saveAs from "file-saver";
+import { v4 as uuidv4 } from "uuid";
 import { MouseCoordinates } from "./types";
-import {
-  findValidEmojiCombo,
-  getEmojiData,
-  getNotoEmojiUrl,
-  getSupportedEmoji,
-} from "./utils";
+import { findValidEmojiCombo, getEmojiData, getSupportedEmoji } from "./utils";
+import Search from "./search";
+import RightEmojiList from "./right-emoji-list";
+import LeftEmojiList from "./left-emoji-list";
 
-interface KitchenProps {}
+export default function Kitchen() {
+  // Selection helpers
+  const [selectedLeftEmoji, setSelectedLeftEmoji] = useState("");
+  const [selectedRightEmoji, setSelectedRightEmoji] = useState("");
 
-interface KitchenState {
-  selectedLeftEmoji: string;
-  selectedRightEmoji: string;
-  bulkDownloadMenu: undefined | MouseCoordinates;
-  bulkDownloading: boolean;
-}
+  // Downloading helpers
+  const [bulkDownloadMenu, setBulkDownloadMenu] = useState<
+    MouseCoordinates | undefined
+  >();
+  const [isBulkDownloading, setIsBulkDownloading] = useState(false);
 
-export default class Kitchen extends React.Component<
-  KitchenProps,
-  KitchenState
-> {
-  constructor(props: KitchenProps) {
-    super(props);
+  // Search helpers
+  const [leftSearchResults, setLeftSearchResults] = useState<Array<string>>([]);
+  const [rightSearchResults, setRightSearchResults] = useState<Array<string>>(
+    []
+  );
 
-    this.state = {
-      selectedLeftEmoji: "",
-      selectedRightEmoji: "",
-      bulkDownloadMenu: undefined,
-      bulkDownloading: false,
-    };
+  // Hacks to get the search bar to update when I need it to
+  const [leftUuid, setLeftUuid] = useState<string>(uuidv4());
+  const [rightUuid, setRightUuid] = useState<string>(uuidv4());
 
-    this.handleLeftEmojiClicked = this.handleLeftEmojiClicked.bind(this);
-    this.handleRightEmojiClicked = this.handleRightEmojiClicked.bind(this);
-    this.handleBulkDownloadMenuOpen =
-      this.handleBulkDownloadMenuOpen.bind(this);
-    this.handleBulkDownload = this.handleBulkDownload.bind(this);
-  }
-
-  render(): React.ReactNode {
-    const {
-      selectedLeftEmoji,
-      selectedRightEmoji,
-      bulkDownloadMenu,
-      bulkDownloading,
-    } = this.state;
-
-    var leftList;
-    var middleList;
-    var rightList;
-    var showOneCombo = false;
-
-    // Neither are selected, show left list, empty middle list, and disable right list
-    if (selectedLeftEmoji === "" && selectedRightEmoji === "") {
-      leftList = this.getEmojiImageList(undefined, this.handleLeftEmojiClicked);
-      middleList = <div></div>;
-      rightList = this.getEmojiImageList();
-    }
-    // Left emoji is selected, but not right, disable the right list appropriately
-    else if (selectedLeftEmoji !== "" && selectedRightEmoji === "") {
-      leftList = this.getEmojiImageList(
-        selectedLeftEmoji,
-        this.handleLeftEmojiClicked
-      );
-
-      middleList = getEmojiData(selectedLeftEmoji)
-        .combinations.map((combination) => {
-          // This will return the correct, latest-date illustration for duplicates
-          return findValidEmojiCombo(
-            combination.leftEmojiCodepoint,
-            combination.rightEmojiCodepoint
-          );
-        })
-        .filter((combo, index, self) => {
-          // This will filter out the duplicates since the above will return identical objects for any one with duplicates
-          return self.indexOf(combo) === index;
-        })
-        .map((combination) => {
-          return (
-            <ImageListItem key={combination.alt}>
-              <img
-                loading="lazy"
-                width="256px"
-                height="256px"
-                alt={combination.alt}
-                src={combination.gStaticUrl}
-              />
-            </ImageListItem>
-          );
-        });
-
-      rightList = this.getEmojiImageList(
-        undefined,
-        this.handleRightEmojiClicked,
-        selectedLeftEmoji
-      );
-    }
-    // Both are selected, show the single combo
-    else {
-      showOneCombo = true;
-      var combo = findValidEmojiCombo(selectedLeftEmoji, selectedRightEmoji);
-
-      leftList = this.getEmojiImageList(
-        selectedLeftEmoji,
-        this.handleLeftEmojiClicked
-      );
-
-      middleList = (
-        <ImageListItem>
-          <img alt={combo.alt} src={combo.gStaticUrl} />
-        </ImageListItem>
-      );
-
-      rightList = this.getEmojiImageList(
-        selectedRightEmoji,
-        this.handleRightEmojiClicked,
-        selectedLeftEmoji
-      );
-    }
-
-    return (
-      <Container
-        maxWidth="xl"
-        sx={{
-          flexGrow: "1",
-          display: "flex",
-          flexDirection: "row",
-          overflowY: "auto",
-          mt: 1,
-        }}
-      >
-        {/* Left Emoji List */}
-        <Box
-          sx={{
-            overflowY: "auto",
-            justifyItems: "center",
-            flexGrow: "1",
-            width: "33%",
-          }}
-        >
-          <Input></Input>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "repeat(3, 1fr)",
-                sm: "repeat(5, 1fr)",
-                md: "repeat(7, 1fr)",
-                lg: "repeat(9, 1fr)",
-                xl: "repeat(10, 1fr)",
-              },
-              [`& .${imageListItemClasses.root}`]: {
-                display: "flex",
-              },
-            }}
-          >
-            {leftList}
-          </Box>
-
-          <Paper
-            sx={{ position: "sticky", bottom: 0, left: 0, right: 0 }}
-            elevation={3}
-          >
-            <BottomNavigation showLabels>
-              <BottomNavigationAction
-                label="Random"
-                icon={
-                  <Typography
-                    sx={{
-                      fontFamily: "'Noto Emoji', sans-serif",
-                      height: "24px",
-                    }}
-                  >
-                    🎲
-                  </Typography>
-                }
-              ></BottomNavigationAction>
-            </BottomNavigation>
-          </Paper>
-
-          {/* Bulk Download Menu */}
-          {selectedLeftEmoji !== "" ? (
-            <Menu
-              open={bulkDownloadMenu !== undefined}
-              onClose={() => {
-                this.setState({ bulkDownloadMenu: undefined });
-              }}
-              anchorReference="anchorPosition"
-              anchorPosition={
-                bulkDownloadMenu !== undefined
-                  ? {
-                      top: bulkDownloadMenu.mouseY,
-                      left: bulkDownloadMenu.mouseX,
-                    }
-                  : undefined
-              }
-            >
-              <MenuItem>
-                <LoadingButton
-                  loading={bulkDownloading}
-                  loadingPosition="start"
-                  startIcon={<Download fontSize="small" />}
-                  onClick={this.handleBulkDownload}
-                >
-                  Bulk Download
-                </LoadingButton>
-              </MenuItem>
-            </Menu>
-          ) : undefined}
-        </Box>
-
-        {/* Middle Combination List */}
-        <Box
-          sx={{
-            mx: 3,
-            overflowY: "auto",
-            justifyItems: "center",
-            flexGrow: "1",
-            width: "33%",
-          }}
-        >
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "repeat(1, 1fr)",
-                sm: showOneCombo ? "repeat(1, 1fr)" : "repeat(2, 1fr)",
-                md: showOneCombo ? "repeat(1, 1fr)" : "repeat(3, 1fr)",
-              },
-              [`& .${imageListItemClasses.root}`]: {
-                display: "flex",
-              },
-            }}
-          >
-            {middleList}
-          </Box>
-        </Box>
-
-        {/* Right Emoji List */}
-        <Box
-          sx={{
-            overflowY: "auto",
-            justifyItems: "center",
-            flexGrow: "1",
-            width: "33%",
-          }}
-        >
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "repeat(3, 1fr)",
-                sm: "repeat(5, 1fr)",
-                md: "repeat(7, 1fr)",
-                lg: "repeat(9, 1fr)",
-                xl: "repeat(10, 1fr)",
-              },
-              [`& .${imageListItemClasses.root}`]: {
-                display: "flex",
-              },
-            }}
-          >
-            {rightList}
-          </Box>
-
-          <Paper
-            sx={{ position: "sticky", bottom: 0, left: 0, right: 0 }}
-            elevation={3}
-          >
-            <BottomNavigation showLabels>
-              <BottomNavigationAction label="Search" icon={<Search />} />
-              <BottomNavigationAction
-                label="Random"
-                icon={
-                  <Typography
-                    sx={{
-                      fontFamily: "'Noto Emoji', sans-serif",
-                      height: "24px",
-                    }}
-                  >
-                    🎲
-                  </Typography>
-                }
-              ></BottomNavigationAction>
-            </BottomNavigation>
-          </Paper>
-        </Box>
-      </Container>
-    );
-  }
-
-  handleLeftEmojiClicked(clickedEmoji: string, event: React.SyntheticEvent) {
+  /**
+   * 👈 Handler when an emoji is selected from the left-hand list
+   */
+  const handleLeftEmojiClicked = (clickedEmoji: string) => {
     // If we're unsetting the left column, clear the right column too
-    if (this.state.selectedLeftEmoji === clickedEmoji) {
-      this.setState({
-        selectedLeftEmoji: "",
-        selectedRightEmoji: "",
-      });
+    if (selectedLeftEmoji === clickedEmoji) {
+      setSelectedLeftEmoji("");
+      setSelectedRightEmoji("");
     }
     // Else we clicked another left emoji while both are selected, set the left column as selected and clear right column
-    else if (
-      this.state.selectedLeftEmoji !== "" &&
-      this.state.selectedRightEmoji !== ""
-    ) {
-      this.setState({
-        selectedLeftEmoji: clickedEmoji,
-        selectedRightEmoji: "",
-      });
+    else if (selectedLeftEmoji !== "" && selectedRightEmoji !== "") {
+      setSelectedLeftEmoji(clickedEmoji);
+      setSelectedRightEmoji("");
     } else {
-      this.setState({
-        selectedLeftEmoji: clickedEmoji,
-      });
+      setSelectedLeftEmoji(clickedEmoji);
     }
-  }
+  };
 
-  handleRightEmojiClicked(clickedEmoji: string, event: React.SyntheticEvent) {
-    this.setState({
-      selectedRightEmoji:
-        clickedEmoji === this.state.selectedRightEmoji ? "" : clickedEmoji,
-    });
-  }
+  /**
+   * 🎲 Handler when left-hand randomize button clicked
+   */
+  const handleLeftEmojiRandomize = () => {
+    var possibleEmoji: Array<string>;
 
-  getEmojiImageList(
-    selectedEmoji?: string,
-    onClickHandler?: (
-      clickedEmoji: string,
-      event: React.SyntheticEvent
-    ) => void,
-    filterToValidCombosFor?: string
-  ): Array<JSX.Element> {
-    const knownSupportedEmoji = getSupportedEmoji();
-    return knownSupportedEmoji.map((emojiCodepoint) => {
-      const data = getEmojiData(emojiCodepoint);
+    // Pick a random emoji from all possible emoji
+    possibleEmoji = getSupportedEmoji().filter(
+      (codepoint) => codepoint !== selectedLeftEmoji
+    );
 
-      // Every emoji is considered valid unless we pass in one-half of the pair to filter on
-      var isValidCombo = true;
-      if (filterToValidCombosFor) {
-        // Find the pairs where the emoji we're on is either on the left or right side of the combinations for this emoji
-        isValidCombo = getEmojiData(filterToValidCombosFor).combinations.some(
-          (c) => {
-            // If we're on the double emoji combo, both sides need to be equal to be valid
-            if (data.emojiCodepoint === filterToValidCombosFor) {
-              return (
-                data.emojiCodepoint === c.leftEmojiCodepoint &&
-                data.emojiCodepoint === c.rightEmojiCodepoint
-              );
-            }
+    const randomEmoji =
+      possibleEmoji[Math.floor(Math.random() * possibleEmoji.length)];
 
-            // Otherwise, being on either side is valid
-            return (
-              data.emojiCodepoint === c.leftEmojiCodepoint ||
-              data.emojiCodepoint === c.rightEmojiCodepoint
-            );
-          }
-        );
-      }
+    // Since we're selecting a new left emoji, clear out the right emoji
+    setSelectedLeftEmoji(randomEmoji);
+    setSelectedRightEmoji("");
+  };
 
-      // Handle complex enable/disable behavior -- due to needing to restrict certain invalid combinations
-      var onClick: (clickedEmoji: string, event: React.SyntheticEvent) => void;
-      var opacity: number;
-      if (isValidCombo && onClickHandler) {
-        onClick = onClickHandler;
-        opacity = 1;
-      } else {
-        onClick = () => {};
-        opacity = 0.2;
-      }
+  /**
+   * 👉 Handler when an emoji is selected from the right-hand list
+   */
+  const handleRightEmojiClicked = (clickedEmoji: string) => {
+    setSelectedRightEmoji(
+      clickedEmoji === selectedRightEmoji ? "" : clickedEmoji
+    );
+  };
 
-      return (
-        <div
-          key={data.alt}
-          onContextMenu={
-            selectedEmoji === data.emojiCodepoint
-              ? this.handleBulkDownloadMenuOpen
-              : () => {}
-          }
-        >
-          <ImageListItem
-            onClick={(event) => onClick(data.emojiCodepoint, event)}
-            sx={{
-              p: 0.5,
-              borderRadius: 2,
-              opacity: opacity,
-              backgroundColor: (theme) =>
-                selectedEmoji === data.emojiCodepoint
-                  ? theme.palette.action.selected
-                  : theme.palette.background.default,
-              "&:hover": {
-                backgroundColor: (theme) => theme.palette.action.hover,
-              },
-            }}
-          >
-            <img
-              loading="lazy"
-              width="32px"
-              height="32px"
-              alt={data.alt}
-              src={getNotoEmojiUrl(data.emojiCodepoint)}
-            />
-          </ImageListItem>
-        </div>
+  /**
+   * 🎲 Handle right-hand randomize button clicked
+   */
+  const handleRightEmojiRandomize = () => {
+    var emojiToPick: Array<string>;
+
+    const data = getEmojiData(selectedLeftEmoji);
+    const possibleEmoji = data.combinations
+      .flatMap((combination) => [
+        combination.leftEmojiCodepoint,
+        combination.rightEmojiCodepoint,
+      ])
+      .filter(
+        (codepoint) =>
+          codepoint !== selectedLeftEmoji && codepoint !== selectedRightEmoji
       );
-    });
-  }
 
-  handleBulkDownloadMenuOpen(event: React.MouseEvent) {
+    const randomEmoji =
+      possibleEmoji[Math.floor(Math.random() * possibleEmoji.length)];
+
+    setSelectedRightEmoji(randomEmoji);
+  };
+
+  /**
+   * 🎲 Handle full randomize button clicked
+   */
+  const handleFullEmojiRandomize = () => {
+    const knownSupportedEmoji = getSupportedEmoji();
+    const randomLeftEmoji =
+      knownSupportedEmoji[
+        Math.floor(Math.random() * knownSupportedEmoji.length)
+      ];
+
+    const data = getEmojiData(randomLeftEmoji);
+    const possibleRightEmoji = data.combinations
+      .flatMap((combination) => [
+        combination.leftEmojiCodepoint,
+        combination.rightEmojiCodepoint,
+      ])
+      .filter((codepoint) => codepoint !== randomLeftEmoji);
+
+    const randomRightEmoji =
+      possibleRightEmoji[Math.floor(Math.random() * possibleRightEmoji.length)];
+
+    setSelectedLeftEmoji(randomLeftEmoji);
+    setLeftUuid(uuidv4());
+    setLeftSearchResults([]);
+    setSelectedRightEmoji(randomRightEmoji);
+    setRightUuid(uuidv4());
+    setRightSearchResults([]);
+  };
+
+  /**
+   * 💭 Helper function to open the bulk download menu
+   */
+  const handleBulkImageDownloadMenuOpen = (event: React.MouseEvent) => {
     event.preventDefault();
-    this.setState({
-      bulkDownloadMenu:
-        this.state.bulkDownloadMenu === undefined
-          ? {
-              mouseX: event.clientX - 2,
-              mouseY: event.clientY - 4,
-            }
-          : undefined,
-    });
-  }
+    setBulkDownloadMenu(
+      bulkDownloadMenu === undefined
+        ? {
+            mouseX: event.clientX - 2,
+            mouseY: event.clientY - 4,
+          }
+        : undefined
+    );
+  };
 
-  async handleBulkDownload() {
+  /**
+   * 💾 Handle bulk combination downloads
+   */
+  const handleBulkImageDownload = async () => {
     try {
-      const zip = new JSZip();
-      const data = getEmojiData(this.state.selectedLeftEmoji);
-      const photoZip = zip.folder(data.alt);
+      // See: https://github.com/Stuk/jszip/issues/369
+      // See: https://github.com/Stuk/jszip/issues/690
+      const currentDate = new Date();
+      const dateWithOffset = new Date(
+        currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
+      );
+      (JSZip as any).defaults.date = dateWithOffset;
 
-      this.setState({ bulkDownloading: true });
+      const zip = new JSZip();
+      const data = getEmojiData(selectedLeftEmoji);
+      const photoZip = zip.folder(data.alt)!;
+
+      setIsBulkDownloading(true);
 
       for (var i = 0; i < data.combinations.length; i++) {
-        const combo = data.combinations[i];
-        const comboBlob = (
-          await axios.get(
-            `https://backend.emojikitchen.dev?imageSource=${combo.gStaticUrl}`,
-            {
-              responseType: "blob",
-            }
-          )
-        ).data;
-        photoZip?.file(`${combo.alt}.png`, comboBlob);
+        const combination = data.combinations[i];
+        const image = await fetch(combination.gStaticUrl);
+        const imageBlob = await image.blob();
+        photoZip.file(`${combination.alt}.png`, imageBlob);
       }
 
       const archive = await zip.generateAsync({ type: "blob" });
       saveAs(archive, data.alt);
 
-      this.setState({ bulkDownloadMenu: undefined, bulkDownloading: false });
+      setBulkDownloadMenu(undefined);
+      setIsBulkDownloading(false);
     } catch (e) {
-      this.setState({ bulkDownloadMenu: undefined, bulkDownloading: false });
+      setBulkDownloadMenu(undefined);
+      setIsBulkDownloading(false);
     }
+  };
+
+  /**
+   * 💾 Handle single combination downloads
+   */
+  const handleImageDownload = () => {
+    var combination = findValidEmojiCombo(
+      selectedLeftEmoji,
+      selectedRightEmoji
+    );
+    saveAs(combination.gStaticUrl, combination.alt);
+  };
+
+  /**
+   * 💾 Handle single image copy-to-clipboard
+   */
+  const handleImageCopy = async () => {
+    var combination = findValidEmojiCombo(
+      selectedLeftEmoji,
+      selectedRightEmoji
+    );
+    const image = await fetch(combination.gStaticUrl);
+    const imageBlob = await image.blob();
+    try {
+      navigator.clipboard.write([
+        new ClipboardItem({
+          "image/png": imageBlob,
+        }),
+      ]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // See: https://caniuse.com/async-clipboard
+  var hasClipboardSupport = "write" in navigator.clipboard;
+  var middleList;
+  var showOneCombo = false;
+
+  // Neither are selected, show left list, empty middle list, and disable right list
+  if (selectedLeftEmoji === "" && selectedRightEmoji === "") {
+    middleList = <div></div>;
   }
+  // Left emoji is selected, but not right, disable the right list appropriately
+  else if (selectedLeftEmoji !== "" && selectedRightEmoji === "") {
+    middleList = getEmojiData(selectedLeftEmoji)
+      .combinations.map((combination) => {
+        // This will return the correct, latest-date illustration for duplicates
+        return findValidEmojiCombo(
+          combination.leftEmojiCodepoint,
+          combination.rightEmojiCodepoint
+        );
+      })
+      .filter((combo, index, self) => {
+        // This will filter out the duplicates since the above will return identical objects for any one with duplicates
+        return self.indexOf(combo) === index;
+      })
+      .map((combination) => {
+        return (
+          <ImageListItem key={combination.alt}>
+            <img
+              loading="lazy"
+              width="256px"
+              height="256px"
+              alt={combination.alt}
+              src={combination.gStaticUrl}
+            />
+          </ImageListItem>
+        );
+      });
+  }
+  // Both are selected, show the single combo
+  else {
+    showOneCombo = true;
+    var combo = findValidEmojiCombo(selectedLeftEmoji, selectedRightEmoji);
+
+    middleList = (
+      <ImageListItem>
+        <img alt={combo.alt} src={combo.gStaticUrl} />
+      </ImageListItem>
+    );
+  }
+
+  return (
+    <Container
+      maxWidth="xl"
+      sx={{
+        flexGrow: "1",
+        display: "flex",
+        flexDirection: "row",
+        overflowY: "auto",
+        mt: 1,
+        position: "relative",
+      }}
+    >
+      {/* Left Emoji Column */}
+      <Box
+        sx={{
+          overflowY: "auto",
+          justifyItems: "center",
+          flexGrow: "1",
+          width: "33%",
+        }}
+      >
+        {/* Left Search */}
+        <Search
+          setSearchResults={setLeftSearchResults}
+          handleRandomize={handleLeftEmojiRandomize}
+          selectedEmoji={selectedLeftEmoji}
+          uuid={leftUuid}
+        />
+
+        {/* Left Emoji List */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "repeat(3, 1fr)",
+              sm: "repeat(5, 1fr)",
+              md: "repeat(7, 1fr)",
+              lg: "repeat(9, 1fr)",
+              xl: "repeat(10, 1fr)",
+            },
+            [`& .${imageListItemClasses.root}`]: {
+              display: "flex",
+            },
+          }}
+        >
+          <LeftEmojiList
+            leftSearchResults={leftSearchResults}
+            selectedLeftEmoji={selectedLeftEmoji}
+            handleLeftEmojiClicked={handleLeftEmojiClicked}
+            handleBulkImageDownloadMenuOpen={handleBulkImageDownloadMenuOpen}
+          />
+        </Box>
+
+        {/* Bulk Download Menu */}
+        {selectedLeftEmoji !== "" ? (
+          <Menu
+            open={bulkDownloadMenu !== undefined}
+            onClose={() => setBulkDownloadMenu(undefined)}
+            anchorReference="anchorPosition"
+            anchorPosition={
+              bulkDownloadMenu !== undefined
+                ? {
+                    top: bulkDownloadMenu.mouseY,
+                    left: bulkDownloadMenu.mouseX,
+                  }
+                : undefined
+            }
+          >
+            <LoadingButton
+              sx={{ mx: 1 }}
+              loading={isBulkDownloading}
+              loadingPosition="start"
+              startIcon={<Download fontSize="small" />}
+              onClick={handleBulkImageDownload}
+            >
+              Bulk Download
+            </LoadingButton>
+          </Menu>
+        ) : undefined}
+      </Box>
+
+      {/* Middle Emoji Column */}
+      <Fab
+        color="primary"
+        onClick={handleFullEmojiRandomize}
+        sx={{
+          position: "absolute",
+          bottom: 20,
+          right: "35%",
+          zIndex: 1,
+        }}
+      >
+        <Typography
+          sx={{
+            textAlign: "center",
+            fontFamily: "'Noto Emoji', sans-serif",
+            height: "24px",
+          }}
+        >
+          🎲
+        </Typography>
+      </Fab>
+      <Box
+        sx={{
+          mx: 3,
+          overflowY: "auto",
+          justifyItems: "center",
+          flexGrow: "1",
+          width: "33%",
+          position: "relative",
+          display: showOneCombo ? "flex" : null,
+          alignItems: showOneCombo ? "center" : null,
+        }}
+      >
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "repeat(1, 1fr)",
+              sm: showOneCombo ? "repeat(1, 1fr)" : "repeat(2, 1fr)",
+              md: showOneCombo ? "repeat(1, 1fr)" : "repeat(3, 1fr)",
+            },
+            [`& .${imageListItemClasses.root}`]: {
+              display: "flex",
+            },
+          }}
+        >
+          {middleList}
+          {showOneCombo && hasClipboardSupport ? (
+            <Container
+              sx={{ display: "flex", justifyContent: "center", pt: 2 }}
+            >
+              <IconButton onClick={handleImageCopy}>
+                <ContentCopy />
+              </IconButton>
+            </Container>
+          ) : null}
+
+          {showOneCombo && !hasClipboardSupport ? (
+            <Container
+              sx={{ display: "flex", justifyContent: "center", pt: 2 }}
+            >
+              <IconButton onClick={handleImageDownload}>
+                <Download />
+              </IconButton>
+            </Container>
+          ) : null}
+        </Box>
+      </Box>
+
+      {/* Right Emoji Column */}
+      <Box
+        sx={{
+          overflowY: "auto",
+          justifyItems: "center",
+          flexGrow: "1",
+          width: "33%",
+        }}
+      >
+        {/* Right Search */}
+        <Search
+          setSearchResults={setRightSearchResults}
+          handleRandomize={handleRightEmojiRandomize}
+          selectedEmoji={selectedRightEmoji}
+          uuid={rightUuid}
+          isRightSearch={true}
+          disabled={selectedLeftEmoji === ""}
+        />
+
+        {/* Right Emoji List */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "repeat(3, 1fr)",
+              sm: "repeat(5, 1fr)",
+              md: "repeat(7, 1fr)",
+              lg: "repeat(9, 1fr)",
+              xl: "repeat(10, 1fr)",
+            },
+            [`& .${imageListItemClasses.root}`]: {
+              display: "flex",
+            },
+          }}
+        >
+          <RightEmojiList
+            rightSearchResults={rightSearchResults}
+            selectedLeftEmoji={selectedLeftEmoji}
+            selectedRightEmoji={selectedRightEmoji}
+            handleRightEmojiClicked={handleRightEmojiClicked}
+          />
+        </Box>
+      </Box>
+    </Container>
+  );
 }

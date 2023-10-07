@@ -1,6 +1,18 @@
 import emojiMetadata from "./metadata.json";
 import { EmojiCombination, EmojiData, EmojiMetadata } from "./types";
 
+/**
+ * Converts an emoji codepoint into a printable emoji used for log statements
+ */
+export function toPrintableEmoji(emojiCodepoint: string): string {
+  return String.fromCodePoint(
+    ...emojiCodepoint.split("-").map((p) => parseInt(`0x${p}`))
+  );
+}
+
+/**
+ * Converts an emoji codepoint into a static github reference image url
+ */
 export function getNotoEmojiUrl(emojiCodepoint: string): string {
   return `https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emojiCodepoint
     .split("-")

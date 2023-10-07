@@ -4,15 +4,9 @@
   "private": true,
   "homepage": "https://emojikitchen.dev",
   "scripts": {
-    "start": "vite",
     "build": "vite build",
-    "serve": "vite preview"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "serve": "vite preview",
+    "start": "vite"
   },
   "browserslist": {
     "production": [
@@ -26,25 +20,33 @@
       "last 1 safari version"
     ]
   },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
   "devDependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.11",
-    "@mui/lab": "^5.0.0-alpha.146",
-    "@mui/material": "^5.14.11",
+    "@mui/icons-material": "^5.14.12",
+    "@mui/lab": "^5.0.0-alpha.147",
+    "@mui/material": "^5.14.12",
     "@primer/octicons-react": "^19.8.0",
     "@types/file-saver": "^2.0.5",
-    "@types/react": "^18.2.23",
-    "@types/react-dom": "^18.2.8",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.10",
+    "@types/uuid": "^9.0.4",
+    "@uidotdev/usehooks": "^2.3.1",
     "@vitejs/plugin-react": "^4.1.0",
-    "axios": "^1.5.1",
     "eslint-config-react-app": "^7.0.1",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.2.2",
-    "vite": "^4.4.9",
+    "uuid": "^9.0.1",
+    "vite": "^4.4.11",
     "vite-tsconfig-paths": "^4.2.1"
   }
 }
