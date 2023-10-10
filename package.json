@@ -37,7 +37,7 @@
     "@types/react": "^18.2.27",
     "@types/react-dom": "^18.2.12",
     "@types/uuid": "^9.0.5",
-    "@uidotdev/usehooks": "^2.3.1",
+    "@uidotdev/usehooks": "^2.4.0",
     "@vitejs/plugin-react": "^4.1.0",
     "eslint-config-react-app": "^7.0.1",
     "file-saver": "^2.0.5",
