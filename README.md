@@ -25,13 +25,3 @@ This will start the application on your local machine, running on [http://localh
 All application deployments are managed via GitHub Actions and the [`./.github/workflows/deploy.yml`](./.github/workflows/deploy.yml) workflow.
 
 Additionally, application dependencies are automatically managed and updated via Dependabot and the [`./.github/workflows/automerge-dependabot.yml`](./.github/workflows/automerge-dependabot.yml) workflow.
-
-## Supporting Emoji Data
-
-This list of supported emoji and valid emoji combinations was built by scraping Google's API that serves the mashed up images.
-
-This tooling can be found in the [`./scripts`](./scripts) directory.
-
-The [output JSON file](./scripts/emojiOutput.json) is committed directly to this repository due to the extended nature of how long it takes to gather this information.
-
-The script allows for iteratively building on this saved data, so future emojis need only be added to the scraping algorithm and it will be partially added into the existing file.
