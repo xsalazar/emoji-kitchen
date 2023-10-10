@@ -210,17 +210,22 @@ export default function Kitchen() {
       selectedLeftEmoji,
       selectedRightEmoji
     );
-    const image = await fetch(combination.gStaticUrl);
-    const imageBlob = await image.blob();
-    try {
-      navigator.clipboard.write([
+
+    const fetchImage = async () => {
+      const image = await fetch(combination.gStaticUrl);
+      return await image.blob();
+    };
+
+    navigator.clipboard
+      .write([
         new ClipboardItem({
-          "image/png": imageBlob,
+          "image/png": fetchImage(),
         }),
-      ]);
-    } catch (error) {
-      console.error(error);
-    }
+      ])
+      .then(function () {})
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   // See: https://caniuse.com/async-clipboard
