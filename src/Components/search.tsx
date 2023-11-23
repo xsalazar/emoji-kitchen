@@ -20,6 +20,7 @@ import { getEmojiData, getNotoEmojiUrl } from "./utils";
 
 export default function Search({
   setSearchResults,
+  setMobileSearchIsOpen,
   handleRandomize,
   selectedEmoji,
   uuid,
@@ -27,6 +28,7 @@ export default function Search({
   disabled,
 }: {
   setSearchResults: Dispatch<SetStateAction<Array<string>>>;
+  setMobileSearchIsOpen: Dispatch<SetStateAction<boolean>>;
   handleRandomize: () => void;
   selectedEmoji: string;
   uuid: string;
@@ -49,10 +51,12 @@ export default function Search({
   const handleMobileSearchClick = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
+    setMobileSearchIsOpen(true);
     setMobileSearchPopoverAnchorElement(event.currentTarget.parentElement!);
   };
 
   const handleMobileSearchClose = () => {
+    setMobileSearchIsOpen(false);
     setMobileSearchPopoverAnchorElement(null);
   };
 
@@ -151,8 +155,10 @@ export default function Search({
             }}
             inputRef={(input) => {
               setTimeout(() => {
-                input.focus();
-              }, 100);
+                if (input) {
+                  input.focus();
+                }
+              }, 75);
             }}
             InputProps={{
               endAdornment: (

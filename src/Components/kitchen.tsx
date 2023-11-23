@@ -36,6 +36,8 @@ export default function Kitchen() {
   const [rightSearchResults, setRightSearchResults] = useState<Array<string>>(
     []
   );
+  const [leftMobileSearchIsOpen, setLeftMobileSearchIsOpen] = useState(false);
+  const [rightMobileSearchIsOpen, setRightMobileSearchIsOpen] = useState(false);
 
   // Hacks to get the search bar to update when I need it to
   const [leftUuid, setLeftUuid] = useState<string>(uuidv4());
@@ -301,6 +303,7 @@ export default function Kitchen() {
         {/* Left Search */}
         <Search
           setSearchResults={setLeftSearchResults}
+          setMobileSearchIsOpen={setLeftMobileSearchIsOpen}
           handleRandomize={handleLeftEmojiRandomize}
           selectedEmoji={selectedLeftEmoji}
           uuid={leftUuid}
@@ -309,6 +312,7 @@ export default function Kitchen() {
         {/* Left Emoji List */}
         <Box
           sx={{
+            marginTop: leftMobileSearchIsOpen ? "64px" : 0,
             display: "grid",
             gridTemplateColumns: {
               xs: "repeat(3, 1fr)",
@@ -439,6 +443,7 @@ export default function Kitchen() {
         {/* Right Search */}
         <Search
           setSearchResults={setRightSearchResults}
+          setMobileSearchIsOpen={setRightMobileSearchIsOpen}
           handleRandomize={handleRightEmojiRandomize}
           selectedEmoji={selectedRightEmoji}
           uuid={rightUuid}
@@ -449,6 +454,7 @@ export default function Kitchen() {
         {/* Right Emoji List */}
         <Box
           sx={{
+            marginTop: rightMobileSearchIsOpen ? "64px" : 0,
             display: "grid",
             gridTemplateColumns: {
               xs: "repeat(3, 1fr)",
