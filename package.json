@@ -40,7 +40,7 @@
     "react-dom": "^18.2.0",
     "typescript": "^5.3.2",
     "uuid": "^9.0.1",
-    "vite": "^5.0.5",
+    "vite": "^5.0.6",
     "vite-tsconfig-paths": "^4.2.1"
   }
 }
