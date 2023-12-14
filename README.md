@@ -4,7 +4,7 @@ This repository contains the source code for the website [https://emojikitchen.d
 
 This website allows for quick and easy browsing of the comprehensive list of supported emoji mashups as part of Google's [Emoji Kitchen](https://emojipedia.org/emoji-kitchen/).
 
-There are currently just over 30,000 possible valid combinations showcasing the unique illustrations and combined emoji!
+There are currently just over 50,000 possible valid combinations showcasing the unique illustrations and combined emoji!
 
 ## Getting Started
 
