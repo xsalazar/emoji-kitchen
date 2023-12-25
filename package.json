@@ -21,7 +21,7 @@
     ]
   },
   "devDependencies": {
-    "@emotion/react": "^11.11.1",
+    "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.1",
     "@mui/lab": "^5.0.0-alpha.158",
