@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import emojiMetadata from "./metadata.json";
 import { EmojiCombination, EmojiData, EmojiMetadata } from "./types";
 
@@ -63,4 +64,37 @@ export function getEmojiData(emojiCodepoint: string): EmojiData {
 
 export function getSupportedEmoji(): Array<string> {
   return (emojiMetadata as EmojiMetadata).knownSupportedEmoji;
+}
+
+function getEmojiFromURL() {
+  const params = new URLSearchParams(window.location.search)
+  const emojiString = params.get('s') || ''
+  return [stringToCodePoint(emojiString, 0), stringToCodePoint(emojiString, 2)]
+}
+
+function stringToCodePoint (s: string, at: number): string {
+  if (!s) return ''
+  return s.codePointAt(at)?.toString(16) || ''
+}
+
+function codepointToString (codePoint: string) {
+  const codePointInt =  parseInt('0x' + codePoint)
+  if (Number.isNaN(codePointInt)) {
+    return ''
+  }
+  return String.fromCodePoint(codePointInt)
+}
+
+export function useEmojiState() {
+  // Selection helpers
+  const [selectedLeftEmoji, setSelectedLeftEmoji] = useState(() => getEmojiFromURL()[0]);
+  const [selectedRightEmoji, setSelectedRightEmoji] = useState(() => getEmojiFromURL()[1]);
+
+  useEffect(() => {
+    const params = new URLSearchParams()
+    params.set('s', codepointToString(selectedLeftEmoji) + codepointToString(selectedRightEmoji))
+    history.pushState({}, '', '/?' + params.toString())
+  }, [selectedLeftEmoji, selectedRightEmoji])
+
+  return [selectedLeftEmoji,  setSelectedLeftEmoji, selectedRightEmoji, setSelectedRightEmoji] as const
 }
