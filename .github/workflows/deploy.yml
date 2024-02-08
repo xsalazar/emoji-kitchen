@@ -18,6 +18,12 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Download Emoji Kitchen Metadata 💾
+        uses: xsalazar/actions/downloader@master
+        with:
+          url: "https://backend.emojikitchen.dev/"
+          filename: "src/Components/metadata.json"
+
       - name: Setup Node 🏗
         uses: actions/setup-node@v4
         with:
