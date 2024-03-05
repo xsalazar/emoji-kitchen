@@ -29,7 +29,7 @@
     "@primer/octicons-react": "^19.8.0",
     "@types/file-saver": "^2.0.7",
     "@types/react": "^18.2.62",
-    "@types/react-dom": "^18.2.19",
+    "@types/react-dom": "^18.2.20",
     "@types/uuid": "^9.0.8",
     "@uidotdev/usehooks": "^2.4.1",
     "@vitejs/plugin-react": "^4.2.1",
