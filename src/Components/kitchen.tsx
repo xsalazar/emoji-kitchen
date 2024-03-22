@@ -15,15 +15,15 @@ import JSZip from "jszip";
 import saveAs from "file-saver";
 import { v4 as uuidv4 } from "uuid";
 import { MouseCoordinates } from "./types";
-import { findValidEmojiCombo, getEmojiData, getSupportedEmoji } from "./utils";
+import { findValidEmojiCombo, getEmojiData, getSupportedEmoji, useEmojiState } from "./utils";
 import Search from "./search";
 import RightEmojiList from "./right-emoji-list";
 import LeftEmojiList from "./left-emoji-list";
 
+
 export default function Kitchen() {
-  // Selection helpers
-  const [selectedLeftEmoji, setSelectedLeftEmoji] = useState("");
-  const [selectedRightEmoji, setSelectedRightEmoji] = useState("");
+  // Emoji state from url
+  const [selectedLeftEmoji, setSelectedLeftEmoji, selectedRightEmoji, setSelectedRightEmoji] = useEmojiState()
 
   // Downloading helpers
   const [bulkDownloadMenu, setBulkDownloadMenu] = useState<
