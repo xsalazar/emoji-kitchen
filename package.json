@@ -28,7 +28,7 @@
     "@mui/material": "^5.15.14",
     "@primer/octicons-react": "^19.9.0",
     "@types/file-saver": "^2.0.7",
-    "@types/react": "^18.2.73",
+    "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.23",
     "@types/uuid": "^9.0.8",
     "@uidotdev/usehooks": "^2.4.1",
