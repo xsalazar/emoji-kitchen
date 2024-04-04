@@ -263,7 +263,14 @@ export default function Kitchen() {
                   ? combination.rightEmojiCodepoint
                   : combination.leftEmojiCodepoint
               );
-              console.log("clicked");
+            }}
+            sx={{
+              p: 0.5,
+              borderRadius: 4,
+              backgroundColor: (theme) => theme.palette.background.default,
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.action.hover,
+              },
             }}
           >
             <img
