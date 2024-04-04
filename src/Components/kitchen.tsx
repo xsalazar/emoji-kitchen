@@ -255,7 +255,17 @@ export default function Kitchen() {
       })
       .map((combination) => {
         return (
-          <ImageListItem key={combination.alt}>
+          <ImageListItem
+            key={combination.alt}
+            onClick={() => {
+              handleRightEmojiClicked(
+                selectedLeftEmoji !== combination.rightEmojiCodepoint
+                  ? combination.rightEmojiCodepoint
+                  : combination.leftEmojiCodepoint
+              );
+              console.log("clicked");
+            }}
+          >
             <img
               loading="lazy"
               width="256px"
