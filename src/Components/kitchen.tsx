@@ -291,7 +291,11 @@ export default function Kitchen() {
 
     middleList = (
       <ImageListItem>
-        <img alt={combo.alt} src={combo.gStaticUrl} />
+        <img
+          alt={combo.alt}
+          src={combo.gStaticUrl}
+          onClick={() => setSelectedRightEmoji("")}
+        />
       </ImageListItem>
     );
   }
