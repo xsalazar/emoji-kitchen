@@ -255,7 +255,24 @@ export default function Kitchen() {
       })
       .map((combination) => {
         return (
-          <ImageListItem key={combination.alt}>
+          <ImageListItem
+            key={combination.alt}
+            onClick={() => {
+              handleRightEmojiClicked(
+                selectedLeftEmoji !== combination.rightEmojiCodepoint
+                  ? combination.rightEmojiCodepoint
+                  : combination.leftEmojiCodepoint
+              );
+            }}
+            sx={{
+              p: 0.5,
+              borderRadius: 4,
+              backgroundColor: (theme) => theme.palette.background.default,
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.action.hover,
+              },
+            }}
+          >
             <img
               loading="lazy"
               width="256px"
@@ -274,7 +291,11 @@ export default function Kitchen() {
 
     middleList = (
       <ImageListItem>
-        <img alt={combo.alt} src={combo.gStaticUrl} />
+        <img
+          alt={combo.alt}
+          src={combo.gStaticUrl}
+          onClick={() => setSelectedRightEmoji("")}
+        />
       </ImageListItem>
     );
   }
