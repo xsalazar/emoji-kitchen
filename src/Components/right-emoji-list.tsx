@@ -24,15 +24,10 @@ export default function RightEmojiList({
   }
 
   // If we have a selectedLeftEmoji, save the valid combinations for that emoji
-  var possibleEmoji: Array<{ left: string; right: string }> = [];
+  var possibleEmoji: Array<string> = [];
   if (hasSelectedLeftEmoji) {
     const data = getEmojiData(selectedLeftEmoji);
-    possibleEmoji = data.combinations.map((combination) => {
-      return {
-        left: combination.leftEmojiCodepoint,
-        right: combination.rightEmojiCodepoint,
-      };
-    });
+    possibleEmoji = Object.keys(data.combinations);
   }
 
   return knownSupportedEmoji.map((emojiCodepoint) => {
@@ -41,15 +36,7 @@ export default function RightEmojiList({
     // In which case, we need to explicitly check if it's a valid combination
     var isValidCombo = true;
     if (hasSelectedLeftEmoji) {
-      isValidCombo = possibleEmoji.some((c) => {
-        // If we're on the double emoji combo, both sides need to be equal to be valid
-        if (emojiCodepoint === selectedLeftEmoji) {
-          return emojiCodepoint === c.left && emojiCodepoint === c.right;
-        }
-
-        // Otherwise, being on either side is valid
-        return emojiCodepoint === c.left || emojiCodepoint === c.right;
-      });
+      isValidCombo = possibleEmoji.includes(emojiCodepoint);
     }
 
     return (

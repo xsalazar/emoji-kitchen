@@ -15,7 +15,7 @@ import JSZip from "jszip";
 import saveAs from "file-saver";
 import { v4 as uuidv4 } from "uuid";
 import { MouseCoordinates } from "./types";
-import { findValidEmojiCombo, getEmojiData, getSupportedEmoji } from "./utils";
+import { getEmojiData, getSupportedEmoji } from "./utils";
 import Search from "./search";
 import RightEmojiList from "./right-emoji-list";
 import LeftEmojiList from "./left-emoji-list";
@@ -96,15 +96,10 @@ export default function Kitchen() {
     var emojiToPick: Array<string>;
 
     const data = getEmojiData(selectedLeftEmoji);
-    const possibleEmoji = data.combinations
-      .flatMap((combination) => [
-        combination.leftEmojiCodepoint,
-        combination.rightEmojiCodepoint,
-      ])
-      .filter(
-        (codepoint) =>
-          codepoint !== selectedLeftEmoji && codepoint !== selectedRightEmoji
-      );
+    const possibleEmoji = Object.keys(data.combinations).filter(
+      (codepoint) =>
+        codepoint !== selectedLeftEmoji && codepoint !== selectedRightEmoji
+    );
 
     const randomEmoji =
       possibleEmoji[Math.floor(Math.random() * possibleEmoji.length)];
@@ -123,12 +118,9 @@ export default function Kitchen() {
       ];
 
     const data = getEmojiData(randomLeftEmoji);
-    const possibleRightEmoji = data.combinations
-      .flatMap((combination) => [
-        combination.leftEmojiCodepoint,
-        combination.rightEmojiCodepoint,
-      ])
-      .filter((codepoint) => codepoint !== randomLeftEmoji);
+    const possibleRightEmoji = Object.keys(data.combinations).filter(
+      (codepoint) => codepoint !== randomLeftEmoji
+    );
 
     const randomRightEmoji =
       possibleRightEmoji[Math.floor(Math.random() * possibleRightEmoji.length)];
@@ -175,8 +167,11 @@ export default function Kitchen() {
 
       setIsBulkDownloading(true);
 
-      for (var i = 0; i < data.combinations.length; i++) {
-        const combination = data.combinations[i];
+      const combinations = Object.values(data.combinations)
+        .flat()
+        .filter((c) => c.isLatest);
+      for (var i = 0; i < combinations.length; i++) {
+        const combination = combinations[i];
         const image = await fetch(combination.gStaticUrl);
         const imageBlob = await image.blob();
         photoZip.file(`${combination.alt}.png`, imageBlob);
@@ -197,10 +192,10 @@ export default function Kitchen() {
    * 💾 Handle single combination downloads
    */
   const handleImageDownload = () => {
-    var combination = findValidEmojiCombo(
-      selectedLeftEmoji,
+    var combination = getEmojiData(selectedLeftEmoji).combinations[
       selectedRightEmoji
-    );
+    ].filter((c) => c.isLatest)[0];
+
     saveAs(combination.gStaticUrl, combination.alt);
   };
 
@@ -208,10 +203,9 @@ export default function Kitchen() {
    * 💾 Handle single image copy-to-clipboard
    */
   const handleImageCopy = async () => {
-    var combination = findValidEmojiCombo(
-      selectedLeftEmoji,
+    var combination = getEmojiData(selectedLeftEmoji).combinations[
       selectedRightEmoji
-    );
+    ].filter((c) => c.isLatest)[0];
 
     const fetchImage = async () => {
       const image = await fetch(combination.gStaticUrl);
@@ -241,18 +235,10 @@ export default function Kitchen() {
   }
   // Left emoji is selected, but not right, disable the right list appropriately
   else if (selectedLeftEmoji !== "" && selectedRightEmoji === "") {
-    middleList = getEmojiData(selectedLeftEmoji)
-      .combinations.map((combination) => {
-        // This will return the correct, latest-date illustration for duplicates
-        return findValidEmojiCombo(
-          combination.leftEmojiCodepoint,
-          combination.rightEmojiCodepoint
-        );
-      })
-      .filter((combo, index, self) => {
-        // This will filter out the duplicates since the above will return identical objects for any one with duplicates
-        return self.indexOf(combo) === index;
-      })
+    middleList = Object.values(getEmojiData(selectedLeftEmoji).combinations)
+      .flat()
+      .filter((combination) => combination.isLatest)
+      .sort((c1, c2) => c1.gBoardOrder - c2.gBoardOrder)
       .map((combination) => {
         return (
           <ImageListItem key={combination.alt}>
@@ -270,11 +256,13 @@ export default function Kitchen() {
   // Both are selected, show the single combo
   else {
     showOneCombo = true;
-    var combo = findValidEmojiCombo(selectedLeftEmoji, selectedRightEmoji);
+    var combination = getEmojiData(selectedLeftEmoji).combinations[
+      selectedRightEmoji
+    ].filter((c) => c.isLatest)[0];
 
     middleList = (
       <ImageListItem>
-        <img alt={combo.alt} src={combo.gStaticUrl} />
+        <img alt={combination.alt} src={combination.gStaticUrl} />
       </ImageListItem>
     );
   }

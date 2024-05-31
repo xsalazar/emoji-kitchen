@@ -21,7 +21,7 @@ jobs:
       - name: Download Emoji Kitchen Metadata 💾
         uses: xsalazar/actions/downloader@master
         with:
-          url: "https://backend.emojikitchen.dev/"
+          url: "https://raw.githubusercontent.com/xsalazar/emoji-kitchen-backend/main/app/metadata.json"
           filename: "src/Components/metadata.json"
 
       - name: Setup Node 🏗

@@ -10,7 +10,7 @@ export interface EmojiData {
   keywords: Array<string>;
   emojiCodepoint: string;
   gBoardOrder: number;
-  combinations: Array<EmojiCombination>;
+  combinations: { [otherEmojiCodepoint: string]: Array<EmojiCombination> };
 }
 
 export interface EmojiCombination {
@@ -21,6 +21,8 @@ export interface EmojiCombination {
   rightEmoji: string;
   rightEmojiCodepoint: string;
   date: string;
+  isLatest: boolean;
+  gBoardOrder: number;
 }
 
 export interface MouseCoordinates {
