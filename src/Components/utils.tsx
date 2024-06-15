@@ -1,5 +1,5 @@
 import emojiMetadata from "./metadata.json";
-import { EmojiCombination, EmojiData, EmojiMetadata } from "./types";
+import { EmojiData, EmojiMetadata } from "./types";
 
 /**
  * Converts an emoji codepoint into a printable emoji used for log statements
