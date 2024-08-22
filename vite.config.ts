@@ -8,5 +8,10 @@ export default defineConfig(() => {
       outDir: "build",
     },
     plugins: [react(), viteTsconfigPaths()],
+    server: {
+      headers: {
+        "X-Frame-Options": "DENY", // Stops your site being used as an iframe
+      },
+    },
   };
 });
