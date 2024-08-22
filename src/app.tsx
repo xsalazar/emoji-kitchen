@@ -43,21 +43,23 @@ const theme = createTheme({
 });
 
 function App() {
-  return (
-    <div
-      style={{
-        minHeight: "100dvh",
-        maxHeight: "100dvh",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <ThemeProvider theme={theme}>
-        <Kitchen />
-      </ThemeProvider>
-      <Footer />
-    </div>
-  );
+  if (window.self === window.top) {
+    return (
+      <div
+        style={{
+          minHeight: "100dvh",
+          maxHeight: "100dvh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <ThemeProvider theme={theme}>
+          <Kitchen />
+        </ThemeProvider>
+        <Footer />
+      </div>
+    );
+  }
 }
 
 export default App;
