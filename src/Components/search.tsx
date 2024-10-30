@@ -6,62 +6,34 @@ import {
   IconButton,
   InputBase,
   Paper,
-  Popover,
-  TextField,
   Typography,
 } from "@mui/material";
-import {
-  BackspaceOutlined,
-  Close,
-  ManageSearchOutlined,
-  Search as SearchIcon,
-} from "@mui/icons-material";
+import { Close, Search as SearchIcon } from "@mui/icons-material";
 import { getEmojiData, getNotoEmojiUrl } from "./utils";
 
 export default function Search({
-  setSearchResults,
-  setMobileSearchIsOpen,
-  handleRandomize,
-  selectedEmoji,
-  uuid,
-  isRightSearch,
   disabled,
+  handleRandomize,
+  isMobile,
+  selectedEmoji,
+  setSearchResults,
+  uuid,
 }: {
-  setSearchResults: Dispatch<SetStateAction<Array<string>>>;
-  setMobileSearchIsOpen: Dispatch<SetStateAction<boolean>>;
-  handleRandomize: () => void;
-  selectedEmoji: string;
-  uuid: string;
-  isRightSearch?: boolean;
   disabled?: boolean;
+  handleRandomize?: () => void;
+  isMobile: boolean;
+  selectedEmoji?: string;
+  setSearchResults: Dispatch<SetStateAction<Array<string>>>;
+  uuid: string;
 }) {
   const [value, setValue] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(value, 300);
-  const [
-    mobileSearchPopoverAnchorElement,
-    setMobileSearchPopoverAnchorElement,
-  ] = React.useState<HTMLElement | null>(null);
-  const mobileSearchOpen = Boolean(mobileSearchPopoverAnchorElement);
 
-  const currentWidth = window.innerWidth;
-  const collapseSearch = currentWidth < 600;
   const hasSearchValue = value !== "";
 
-  const handleMobileSearchClick = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    setMobileSearchIsOpen(true);
-    setMobileSearchPopoverAnchorElement(event.currentTarget.parentElement!);
-  };
-
-  const handleMobileSearchClose = () => {
-    setMobileSearchIsOpen(false);
-    setMobileSearchPopoverAnchorElement(null);
-  };
-
   /**
-   * Hacky input to clear text box when randomizing from parent element
+   * Hacky input to clear text box when full randomizing from parent element while search results are shown
    */
   useEffect(() => {
     setValue("");
@@ -97,112 +69,44 @@ export default function Search({
     }
   }, [debouncedSearchTerm]);
 
-  if (collapseSearch) {
+  if (isMobile) {
     return (
       <Paper
         sx={{
           position: "sticky",
           top: 3,
           zIndex: 1,
-          mx: "auto",
+          mx: 1.5,
           mb: 1,
           p: "2px 4px",
           display: "flex",
           alignItems: "center",
-          width: "fit-content",
         }}
       >
-        <IconButton
-          color={hasSearchValue ? "primary" : "inherit"}
-          sx={{
-            position: "sticky",
-            top: 3,
-            zIndex: 1,
-            background: hasSearchValue ? 0.5 : null,
-          }}
-          onClick={handleMobileSearchClick}
-        >
+        <IconButton disabled sx={{ p: "10px" }} aria-label="search">
           {isSearching ? (
             <CircularProgress size={24} color="inherit" />
-          ) : hasSearchValue ? (
-            <ManageSearchOutlined />
           ) : (
             <SearchIcon />
           )}
         </IconButton>
-        <Popover
-          sx={{ mt: 1 }}
-          open={mobileSearchOpen}
-          anchorEl={mobileSearchPopoverAnchorElement}
-          onClose={handleMobileSearchClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: isRightSearch ? "right" : "left",
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="Search Emoji"
+          value={value}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setValue(event.target.value);
           }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: isRightSearch ? "right" : "left",
-          }}
-        >
-          <TextField
-            autoFocus
-            size="small"
-            sx={{ flex: 1 }}
-            placeholder="Search Emoji"
-            value={value}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setValue(event.target.value);
-            }}
-            inputRef={(input) => {
-              setTimeout(() => {
-                if (input) {
-                  input.focus();
-                }
-              }, 75);
-            }}
-            InputProps={{
-              endAdornment: (
-                <IconButton
-                  size="small"
-                  disabled={value === ""}
-                  color="primary"
-                  sx={{ p: "10px" }}
-                  onClick={() => setValue("")}
-                >
-                  <BackspaceOutlined />
-                </IconButton>
-              ),
-            }}
-          />
-        </Popover>
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-        <IconButton
-          color="primary"
-          sx={{ p: "10px" }}
-          disabled={hasSearchValue || disabled}
-          onClick={hasSearchValue ? () => null : handleRandomize}
-        >
-          {selectedEmoji !== "" ? (
-            <img
-              loading="lazy"
-              width="24px"
-              height="24px"
-              alt={getEmojiData(selectedEmoji).alt}
-              src={getNotoEmojiUrl(getEmojiData(selectedEmoji).emojiCodepoint)}
-            />
-          ) : (
-            <Typography
-              sx={{
-                textAlign: "center",
-                fontFamily: "Noto Emoji, Apple Color Emoji, sans-serif",
-                height: "24px",
-                width: "24px",
-              }}
-            >
-              🎲
-            </Typography>
-          )}
-        </IconButton>
+        />
+        {hasSearchValue ? (
+          <IconButton
+            color="primary"
+            sx={{ p: "10px" }}
+            onClick={() => setValue("")}
+          >
+            <Close />
+          </IconButton>
+        ) : null}
       </Paper>
     );
   }
@@ -217,7 +121,7 @@ export default function Search({
         mb: 1,
         p: "2px 4px",
         display: "flex",
-        alignItems: "center",
+        width: "-webkit-fill-available",
       }}
     >
       <IconButton disabled sx={{ p: "10px" }} aria-label="search">
@@ -251,7 +155,7 @@ export default function Search({
         disabled={hasSearchValue || disabled}
         onClick={hasSearchValue ? () => null : handleRandomize}
       >
-        {selectedEmoji !== "" ? (
+        {selectedEmoji && selectedEmoji !== "" ? (
           <img
             loading="lazy"
             width="24px"
