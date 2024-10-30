@@ -363,7 +363,7 @@ export default function Kitchen() {
           mt: 1,
           position: "relative",
           height: "100dvh",
-          minWidth: "370px",
+          minWidth: "320px",
         }}
       >
         {/* Emoji Column */}
@@ -383,22 +383,20 @@ export default function Kitchen() {
               mx: 1.5,
               mb: 1,
               p: "16px",
-              display: "flex",
               justifyContent: "center",
             }}
           >
             <Grid container columns={14} spacing={2}>
               {/* Left Emoji */}
               <Grid size={4}>
-                <Stack direction="column" justifyContent="center">
+                <Stack direction="column">
                   <Paper
                     elevation={0}
                     onClick={() => setLeftEmojiSelected(true)}
                     sx={{
                       display: "flex",
-                      justifyContent: "middle",
-                      height: "100%",
-                      width: "100%",
+                      flexDirection: "column",
+                      flexShrink: 0,
                       marginBottom: "4px",
                       backgroundColor: (theme) =>
                         leftEmojiSelected
@@ -411,7 +409,10 @@ export default function Kitchen() {
                   >
                     {selectedLeftEmoji !== "" ? (
                       <img
-                        style={{ padding: "8px" }}
+                        style={{
+                          aspectRatio: 1,
+                          padding: "8px",
+                        }}
                         loading="lazy"
                         alt={getEmojiData(selectedLeftEmoji).alt}
                         src={getNotoEmojiUrl(
@@ -461,9 +462,7 @@ export default function Kitchen() {
                     onClick={() => setLeftEmojiSelected(false)}
                     sx={{
                       display: "flex",
-                      justifyContent: "middle",
-                      width: "100%",
-                      height: "100%",
+                      flexDirection: "column",
                       marginBottom: "4px",
                       backgroundColor: (theme) =>
                         leftEmojiSelected
@@ -476,7 +475,10 @@ export default function Kitchen() {
                   >
                     {selectedRightEmoji !== "" ? (
                       <img
-                        style={{ padding: "8px" }}
+                        style={{
+                          aspectRatio: 1,
+                          padding: "8px",
+                        }}
                         loading="lazy"
                         alt={getEmojiData(selectedRightEmoji).alt}
                         src={getNotoEmojiUrl(
@@ -525,18 +527,17 @@ export default function Kitchen() {
                     elevation={0}
                     sx={{
                       display: "flex",
-                      justifyContent: "middle",
-                      width: "100%",
-                      aspectRatio: "1",
+                      flexDirection: "column",
                       marginBottom: "4px",
                     }}
                   >
                     {showOneCombo ? (
-                      <div style={{ padding: "8px" }}>
+                      <div style={{ display: "flex", padding: "8px" }}>
                         <img
                           style={{
-                            width: "100%",
+                            aspectRatio: 1,
                             maxHeight: "100%",
+                            width: "100%",
                           }}
                           loading="lazy"
                           alt={combination!.alt}
