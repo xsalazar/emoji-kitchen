@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
-import {
-  ImageListItem,
-  Box,
-  Container,
-  Typography,
-  IconButton,
-  Menu,
-  Fab,
-  Paper,
-  Stack,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import ButtonBase from "@mui/material/ButtonBase";
+import Chip from "@mui/material/Chip";
+import Container from "@mui/material/Container";
+import ContentCopy from "@mui/icons-material/ContentCopy";
+import Download from "@mui/icons-material/Download";
+import Fab from "@mui/material/Fab";
+import Fade from "@mui/material/Fade";
 import Grid from "@mui/material/Grid2";
-import LoadingButton from "@mui/lab/LoadingButton";
+import IconButton from "@mui/material/IconButton";
+import ImageList from "@mui/material/ImageList";
 import { imageListItemClasses } from "@mui/material/ImageListItem";
-import { Download, ContentCopy } from "@mui/icons-material";
+import ImageListItem from "@mui/material/ImageListItem";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Menu from "@mui/material/Menu";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Typography from "@mui/material/Typography";
 import JSZip from "jszip";
 import saveAs from "file-saver";
 import { v4 as uuidv4 } from "uuid";
@@ -22,15 +27,18 @@ import { getEmojiData, getNotoEmojiUrl, getSupportedEmoji } from "./utils";
 import Search from "./search";
 import RightEmojiList from "./right-emoji-list";
 import LeftEmojiList from "./left-emoji-list";
+import MobileEmojiList from "./mobile-emoji-list";
 
 export default function Kitchen() {
   // Selection helpers
-  const [selectedLeftEmoji, setSelectedLeftEmoji] = useState("");
-  const [selectedRightEmoji, setSelectedRightEmoji] = useState("");
+  var [selectedLeftEmoji, setSelectedLeftEmoji] = useState("");
+  var [selectedRightEmoji, setSelectedRightEmoji] = useState("");
 
   // Mobile helpers
   const [leftEmojiSelected, setLeftEmojiSelected] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [selectedMode, setSelectedMode] = useState("combine");
+  const [combinationCopied, setCombinationCopied] = useState(false);
 
   // Downloading helpers
   const [bulkDownloadMenu, setBulkDownloadMenu] = useState<
@@ -91,6 +99,17 @@ export default function Kitchen() {
       handleFullEmojiRandomize();
     }
   }, [isMobile]);
+
+  /**
+   * 🖨️ Handler to show the little chip when copying a combination on mobile from the browse tab
+   */
+  useEffect(() => {
+    if (combinationCopied) {
+      setTimeout(() => {
+        setCombinationCopied(false);
+      }, 1000);
+    }
+  }, [combinationCopied]);
 
   /**
    * 👈 Handler when an emoji is selected from the left-hand list
@@ -285,13 +304,17 @@ export default function Kitchen() {
   /**
    * 💾 Handle single image copy-to-clipboard
    */
-  const handleImageCopy = async () => {
-    var combination = getEmojiData(selectedLeftEmoji).combinations[
-      selectedRightEmoji
-    ].filter((c) => c.isLatest)[0];
+  const handleImageCopy = async (url?: string) => {
+    if (!url) {
+      url = getEmojiData(selectedLeftEmoji).combinations[
+        selectedRightEmoji
+      ].filter((c) => c.isLatest)[0].gStaticUrl;
+    } else {
+      setCombinationCopied(true);
+    }
 
     const fetchImage = async () => {
-      const image = await fetch(combination.gStaticUrl);
+      const image = await fetch(url);
       return await image.blob();
     };
 
@@ -313,42 +336,119 @@ export default function Kitchen() {
   var combination;
   var showOneCombo = false;
 
-  // Neither are selected, show left list, empty middle list, and disable right list
-  if (selectedLeftEmoji === "" && selectedRightEmoji === "") {
-    middleList = <div></div>;
-  }
-  // Left emoji is selected, but not right, disable the right list appropriately
-  else if (selectedLeftEmoji !== "" && selectedRightEmoji === "") {
-    middleList = Object.values(getEmojiData(selectedLeftEmoji).combinations)
-      .flat()
-      .filter((combination) => combination.isLatest)
-      .sort((c1, c2) => c1.gBoardOrder - c2.gBoardOrder)
-      .map((combination) => {
-        return (
-          <ImageListItem key={combination.alt}>
-            <img
-              loading="lazy"
-              width="256px"
-              height="256px"
-              alt={combination.alt}
-              src={combination.gStaticUrl}
-            />
-          </ImageListItem>
-        );
-      });
-  }
-  // Both are selected, show the single combo
-  else {
-    showOneCombo = true;
-    combination = getEmojiData(selectedLeftEmoji).combinations[
-      selectedRightEmoji
-    ].filter((c) => c.isLatest)[0];
+  if (isMobile) {
+    if (selectedLeftEmoji === "" || selectedRightEmoji === "") {
+      middleList = <div></div>;
+    } else if (selectedMode === "combine") {
+      showOneCombo = true;
 
-    middleList = (
-      <ImageListItem>
-        <img alt={combination.alt} src={combination.gStaticUrl} />
-      </ImageListItem>
-    );
+      // First figure out what your "base" should be
+      var baseEmoji = leftEmojiSelected
+        ? selectedLeftEmoji
+        : selectedRightEmoji;
+      var otherEmoji = leftEmojiSelected
+        ? selectedRightEmoji
+        : selectedLeftEmoji;
+
+      // Get the possible combinations for that base
+      var combinations = getEmojiData(baseEmoji).combinations;
+
+      // If we're switching out of the browse mode, the resulting leftover combination may no longer be valid
+      // If so, generate a random pair and set the "other" appropriately
+      if (!Object.keys(combinations).includes(otherEmoji)) {
+        var possibleEmoji = Object.keys(combinations);
+        var otherEmoji =
+          possibleEmoji[Math.floor(Math.random() * possibleEmoji.length)];
+
+        // Reset the "other" to a random valid combo
+        if (leftEmojiSelected) {
+          setSelectedRightEmoji(otherEmoji);
+        } else {
+          setSelectedLeftEmoji(otherEmoji);
+        }
+      }
+
+      combination = combinations[otherEmoji].filter((c) => c.isLatest)[0];
+
+      middleList = (
+        <ImageListItem>
+          <img alt={combination.alt} src={combination.gStaticUrl} />
+        </ImageListItem>
+      );
+    } else {
+      // Browse combination browser on mobile
+      var baseEmoji = leftEmojiSelected
+        ? selectedLeftEmoji
+        : selectedRightEmoji;
+      middleList = Object.values(getEmojiData(baseEmoji).combinations)
+        .flat()
+        .filter((combination) => combination.isLatest)
+        .sort((c1, c2) => c1.gBoardOrder - c2.gBoardOrder)
+        .map((combination) => {
+          return (
+            <ButtonBase
+              onClick={(_) => handleImageCopy(combination.gStaticUrl)}
+              sx={{
+                p: 0.5,
+                borderRadius: 2,
+                "&:hover": {
+                  backgroundColor: (theme) => {
+                    return theme.palette.action.hover;
+                  },
+                },
+              }}
+            >
+              <ImageListItem key={combination.alt}>
+                <img
+                  loading="lazy"
+                  width="256px"
+                  height="256px"
+                  alt={combination.alt}
+                  src={combination.gStaticUrl}
+                />
+              </ImageListItem>
+            </ButtonBase>
+          );
+        });
+    }
+  } else {
+    // Neither are selected, show left list, empty middle list, and disable right list
+    if (selectedLeftEmoji === "" && selectedRightEmoji === "") {
+      middleList = <div></div>;
+    }
+    // Left emoji is selected, but not right, show the full list of combinations
+    else if (selectedLeftEmoji !== "" && selectedRightEmoji === "") {
+      middleList = Object.values(getEmojiData(selectedLeftEmoji).combinations)
+        .flat()
+        .filter((combination) => combination.isLatest)
+        .sort((c1, c2) => c1.gBoardOrder - c2.gBoardOrder)
+        .map((combination) => {
+          return (
+            <ImageListItem key={combination.alt}>
+              <img
+                loading="lazy"
+                width="256px"
+                height="256px"
+                alt={combination.alt}
+                src={combination.gStaticUrl}
+              />
+            </ImageListItem>
+          );
+        });
+    }
+    // Both are selected, show the single combo
+    else {
+      showOneCombo = true;
+      combination = getEmojiData(selectedLeftEmoji).combinations[
+        selectedRightEmoji
+      ].filter((c) => c.isLatest)[0];
+
+      middleList = (
+        <ImageListItem>
+          <img alt={combination.alt} src={combination.gStaticUrl} />
+        </ImageListItem>
+      );
+    }
   }
 
   if (isMobile) {
@@ -366,7 +466,7 @@ export default function Kitchen() {
           minWidth: "320px",
         }}
       >
-        {/* Emoji Column */}
+        {/* Entire Emoji Column */}
         <Box
           sx={{
             overflowY: "auto",
@@ -374,7 +474,7 @@ export default function Kitchen() {
             width: "100%",
           }}
         >
-          {/* Equation Section */}
+          {/* Top Section */}
           <Paper
             sx={{
               position: "sticky",
@@ -386,179 +486,212 @@ export default function Kitchen() {
               justifyContent: "center",
             }}
           >
-            <Grid container columns={14} spacing={2}>
-              {/* Left Emoji */}
-              <Grid size={4}>
-                <Stack direction="column">
-                  <Paper
-                    elevation={0}
-                    onClick={() => setLeftEmojiSelected(true)}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      flexShrink: 0,
-                      marginBottom: "4px",
-                      backgroundColor: (theme) =>
-                        leftEmojiSelected
-                          ? theme.palette.action.selected
-                          : theme.palette.background.default,
-                      "&:hover": {
-                        backgroundColor: (theme) => theme.palette.action.hover,
-                      },
-                    }}
-                  >
-                    {selectedLeftEmoji !== "" ? (
-                      <img
-                        style={{
-                          aspectRatio: 1,
-                          padding: "8px",
-                        }}
-                        loading="lazy"
-                        alt={getEmojiData(selectedLeftEmoji).alt}
-                        src={getNotoEmojiUrl(
-                          getEmojiData(selectedLeftEmoji).emojiCodepoint
-                        )}
-                      />
-                    ) : null}
-                  </Paper>
-                  <IconButton
-                    onClick={handleLeftEmojiRandomize}
-                    sx={{
-                      width: "fit-content",
-                      marginX: "auto",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        textAlign: "center",
-                        fontFamily: "Noto Emoji, Apple Color Emoji, sans-serif",
-                        height: "24px",
-                        width: "24px",
-                      }}
-                    >
-                      🎲
-                    </Typography>
-                  </IconButton>
-                </Stack>
-              </Grid>
-
-              {/* Plus sign */}
-              <Grid
-                alignItems="center"
-                display="flex"
-                justifyContent="center"
-                paddingBottom="45px"
-                size={1}
-                textAlign="center"
+            <Stack direction="column" spacing={1} alignItems="center">
+              {/* Mode switcher */}
+              <ToggleButtonGroup
+                color="primary"
+                exclusive
+                onChange={(_, value) => setSelectedMode(value)}
+                size="small"
+                value={selectedMode}
               >
-                <Typography>+</Typography>
-              </Grid>
+                <ToggleButton value="combine">Combine</ToggleButton>
+                <ToggleButton value="browse">Browse</ToggleButton>
+              </ToggleButtonGroup>
 
-              {/* Right Emoji */}
-              <Grid size={4}>
-                <Stack direction="column" justifyContent="center">
-                  <Paper
-                    elevation={0}
-                    onClick={() => setLeftEmojiSelected(false)}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      marginBottom: "4px",
-                      backgroundColor: (theme) =>
-                        leftEmojiSelected
-                          ? theme.palette.background.default
-                          : theme.palette.action.selected,
-                      "&:hover": {
-                        backgroundColor: (theme) => theme.palette.action.hover,
-                      },
-                    }}
-                  >
-                    {selectedRightEmoji !== "" ? (
-                      <img
-                        style={{
-                          aspectRatio: 1,
-                          padding: "8px",
+              {selectedMode === "combine" ? (
+                <Grid container columns={14} spacing={2}>
+                  {/* Left Emoji */}
+                  <Grid size={4}>
+                    <Stack direction="column">
+                      <Paper
+                        elevation={0}
+                        onClick={() => setLeftEmojiSelected(true)}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          flexShrink: 0,
+                          marginBottom: "4px",
+                          backgroundColor: (theme) =>
+                            leftEmojiSelected
+                              ? theme.palette.action.selected
+                              : theme.palette.background.default,
+                          "&:hover": {
+                            backgroundColor: (theme) =>
+                              theme.palette.action.hover,
+                          },
                         }}
-                        loading="lazy"
-                        alt={getEmojiData(selectedRightEmoji).alt}
-                        src={getNotoEmojiUrl(
-                          getEmojiData(selectedRightEmoji).emojiCodepoint
-                        )}
-                      />
-                    ) : null}
-                  </Paper>
-                  <IconButton
-                    onClick={handleRightEmojiRandomize}
-                    sx={{
-                      width: "fit-content",
-                      marginX: "auto",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        textAlign: "center",
-                        fontFamily: "Noto Emoji, Apple Color Emoji, sans-serif",
-                        height: "24px",
-                        width: "24px",
-                      }}
-                    >
-                      🎲
-                    </Typography>
-                  </IconButton>
-                </Stack>
-              </Grid>
-
-              {/* Equal sign */}
-              <Grid
-                alignItems="center"
-                display="flex"
-                justifyContent="center"
-                paddingBottom="45px"
-                size={1}
-                textAlign="center"
-              >
-                <Typography>=</Typography>
-              </Grid>
-
-              {/* Result */}
-              <Grid size={4}>
-                <Stack direction="column" justifyContent="center">
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    {showOneCombo ? (
-                      <div style={{ display: "flex", padding: "8px" }}>
-                        <img
-                          style={{
-                            aspectRatio: 1,
-                            maxHeight: "100%",
-                            width: "100%",
+                      >
+                        {selectedLeftEmoji !== "" ? (
+                          <img
+                            style={{
+                              aspectRatio: 1,
+                              padding: "8px",
+                            }}
+                            loading="lazy"
+                            alt={getEmojiData(selectedLeftEmoji).alt}
+                            src={getNotoEmojiUrl(
+                              getEmojiData(selectedLeftEmoji).emojiCodepoint
+                            )}
+                          />
+                        ) : null}
+                      </Paper>
+                      <IconButton
+                        onClick={handleLeftEmojiRandomize}
+                        sx={{
+                          width: "fit-content",
+                          marginX: "auto",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            textAlign: "center",
+                            fontFamily:
+                              "Noto Emoji, Apple Color Emoji, sans-serif",
+                            height: "24px",
+                            width: "24px",
                           }}
-                          loading="lazy"
-                          alt={combination!.alt}
-                          src={combination!.gStaticUrl}
-                        />
-                      </div>
-                    ) : null}
-                  </Paper>
-                  <IconButton
-                    onClick={handleImageCopy}
-                    sx={{
-                      height: "40px",
-                      width: "40px",
-                      marginX: "auto",
-                    }}
+                        >
+                          🎲
+                        </Typography>
+                      </IconButton>
+                    </Stack>
+                  </Grid>
+
+                  {/* Plus sign */}
+                  <Grid
+                    alignItems="center"
+                    display="flex"
+                    justifyContent="center"
+                    paddingBottom="45px"
+                    size={1}
+                    textAlign="center"
                   >
-                    <ContentCopy fontSize="small" />
-                  </IconButton>
-                </Stack>
-              </Grid>
-            </Grid>
+                    <Typography>+</Typography>
+                  </Grid>
+
+                  {/* Right Emoji */}
+                  <Grid size={4}>
+                    <Stack direction="column" justifyContent="center">
+                      <Paper
+                        elevation={0}
+                        onClick={() => setLeftEmojiSelected(false)}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          marginBottom: "4px",
+                          backgroundColor: (theme) =>
+                            leftEmojiSelected
+                              ? theme.palette.background.default
+                              : theme.palette.action.selected,
+                          "&:hover": {
+                            backgroundColor: (theme) =>
+                              theme.palette.action.hover,
+                          },
+                        }}
+                      >
+                        {selectedRightEmoji !== "" ? (
+                          <img
+                            style={{
+                              aspectRatio: 1,
+                              padding: "8px",
+                            }}
+                            loading="lazy"
+                            alt={getEmojiData(selectedRightEmoji).alt}
+                            src={getNotoEmojiUrl(
+                              getEmojiData(selectedRightEmoji).emojiCodepoint
+                            )}
+                          />
+                        ) : null}
+                      </Paper>
+                      <IconButton
+                        onClick={handleRightEmojiRandomize}
+                        sx={{
+                          width: "fit-content",
+                          marginX: "auto",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            textAlign: "center",
+                            fontFamily:
+                              "Noto Emoji, Apple Color Emoji, sans-serif",
+                            height: "24px",
+                            width: "24px",
+                          }}
+                        >
+                          🎲
+                        </Typography>
+                      </IconButton>
+                    </Stack>
+                  </Grid>
+
+                  {/* Equal sign */}
+                  <Grid
+                    alignItems="center"
+                    display="flex"
+                    justifyContent="center"
+                    paddingBottom="45px"
+                    size={1}
+                    textAlign="center"
+                  >
+                    <Typography>=</Typography>
+                  </Grid>
+
+                  {/* Result */}
+                  <Grid size={4}>
+                    <Stack direction="column" justifyContent="center">
+                      <Paper
+                        elevation={0}
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          marginBottom: "4px",
+                        }}
+                      >
+                        {showOneCombo ? (
+                          <div style={{ display: "flex", padding: "8px" }}>
+                            <img
+                              style={{
+                                aspectRatio: 1,
+                                maxHeight: "100%",
+                                width: "100%",
+                              }}
+                              loading="lazy"
+                              alt={combination!.alt}
+                              src={combination!.gStaticUrl}
+                            />
+                          </div>
+                        ) : null}
+                      </Paper>
+                      <IconButton
+                        onClick={(_) => handleImageCopy()}
+                        sx={{
+                          height: "40px",
+                          width: "40px",
+                          marginX: "auto",
+                        }}
+                      >
+                        <ContentCopy fontSize="small" />
+                      </IconButton>
+                    </Stack>
+                  </Grid>
+                </Grid>
+              ) : (
+                <ImageList cols={4} sx={{ height: "300px", width: "auto" }}>
+                  {middleList}
+                </ImageList>
+              )}
+
+              <Fade in={combinationCopied} timeout={250}>
+                <Chip
+                  sx={{ position: "absolute", bottom: 20 }}
+                  label="Copied"
+                  size="small"
+                  color="primary"
+                />
+              </Fade>
+            </Stack>
           </Paper>
 
           {/* Search */}
@@ -584,26 +717,24 @@ export default function Kitchen() {
               },
             }}
           >
-            {leftEmojiSelected ? (
-              <LeftEmojiList
-                handleBulkImageDownloadMenuOpen={
-                  handleBulkImageDownloadMenuOpen
-                }
-                handleLeftEmojiClicked={handleLeftEmojiClicked}
-                isMobile={isMobile}
-                leftSearchResults={mobileSearchResults}
-                selectedLeftEmoji={selectedLeftEmoji}
-                selectedRightEmoji={selectedRightEmoji}
-              />
-            ) : (
-              <RightEmojiList
-                handleRightEmojiClicked={handleRightEmojiClicked}
-                rightSearchResults={mobileSearchResults}
-                selectedLeftEmoji={selectedLeftEmoji}
-                selectedRightEmoji={selectedRightEmoji}
-              />
-            )}
+            <MobileEmojiList
+              handleEmojiClicked={
+                leftEmojiSelected
+                  ? handleLeftEmojiClicked
+                  : handleRightEmojiClicked
+              }
+              searchResults={mobileSearchResults}
+              selectedEmoji={
+                leftEmojiSelected ? selectedLeftEmoji : selectedRightEmoji
+              }
+              selectedOtherEmoji={
+                leftEmojiSelected ? selectedRightEmoji : selectedLeftEmoji
+              }
+              selectedMode={selectedMode}
+            />
           </Box>
+
+          {/* Full randomizer */}
           <Fab
             color="primary"
             onClick={handleFullEmojiRandomize}
@@ -678,10 +809,8 @@ export default function Kitchen() {
           <LeftEmojiList
             handleBulkImageDownloadMenuOpen={handleBulkImageDownloadMenuOpen}
             handleLeftEmojiClicked={handleLeftEmojiClicked}
-            isMobile={isMobile}
             leftSearchResults={leftSearchResults}
             selectedLeftEmoji={selectedLeftEmoji}
-            selectedRightEmoji={selectedRightEmoji}
           />
         </Box>
 
@@ -764,7 +893,7 @@ export default function Kitchen() {
             <Container
               sx={{ display: "flex", justifyContent: "center", pt: 2 }}
             >
-              <IconButton onClick={handleImageCopy}>
+              <IconButton onClick={(_) => handleImageCopy()}>
                 <ContentCopy />
               </IconButton>
             </Container>

@@ -2,9 +2,6 @@ import { Dispatch } from "react";
 import { getEmojiData, getNotoEmojiUrl, getSupportedEmoji } from "./utils";
 import { ImageListItem } from "@mui/material";
 
-/**
- * The behavior of this component is the same across mobile and desktop
- */
 export default function RightEmojiList({
   handleRightEmojiClicked,
   rightSearchResults,
