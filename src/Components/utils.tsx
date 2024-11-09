@@ -22,7 +22,6 @@ export function getNotoEmojiUrl(emojiCodepoint: string): string {
 }
 
 export function getEmojiData(emojiCodepoint: string): EmojiData {
-  console.log(emojiMetadata);
   return (emojiMetadata as EmojiMetadata).data[emojiCodepoint];
 }
 
