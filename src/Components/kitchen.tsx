@@ -37,6 +37,9 @@ export default function Kitchen() {
   // Mobile helpers
   const [leftEmojiSelected, setLeftEmojiSelected] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(
+    window.innerHeight <= 512
+  );
   const [selectedMode, setSelectedMode] = useState("combine");
   const [combinationCopied, setCombinationCopied] = useState(false);
 
@@ -63,13 +66,28 @@ export default function Kitchen() {
   /**
    * 📱 Mobile handler to naively detect if we're on a phone or not
    */
-  function handleWindowSizeChange() {
+  function handleWindowWidthChange() {
     window.innerWidth <= 768 ? setIsMobile(true) : setIsMobile(false);
   }
   useEffect(() => {
-    window.addEventListener("resize", handleWindowSizeChange);
+    window.addEventListener("resize", handleWindowWidthChange);
     return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
+      window.removeEventListener("resize", handleWindowWidthChange);
+    };
+  }, []);
+
+  /**
+   * 📱 Mobile handler to naively detect if we're on a phone or not
+   */
+  function handleWindowHeightChange() {
+    window.innerHeight <= 512
+      ? setIsKeyboardOpen(true)
+      : setIsKeyboardOpen(false);
+  }
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowHeightChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowHeightChange);
     };
   }, []);
 
@@ -476,6 +494,7 @@ export default function Kitchen() {
         >
           {/* Top Section */}
           <Paper
+            hidden={isKeyboardOpen}
             sx={{
               position: "sticky",
               top: 3,
