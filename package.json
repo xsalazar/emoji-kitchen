@@ -39,7 +39,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.7.3",
-    "uuid": "^11.0.4",
+    "uuid": "^11.0.5",
     "vite": "^6.0.7",
     "vite-tsconfig-paths": "^5.1.4"
   }
