@@ -8,5 +8,8 @@ export default defineConfig(() => {
       outDir: "build",
     },
     plugins: [react(), viteTsconfigPaths()],
+    server: {
+      host: "127.0.0.1",
+    },
   };
 });
