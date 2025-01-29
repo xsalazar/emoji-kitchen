@@ -23,7 +23,7 @@
   "devDependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.1",
+    "@mui/icons-material": "^6.4.2",
     "@mui/lab": "^6.0.0-beta.24",
     "@mui/material": "^6.4.1",
     "@primer/octicons-react": "^19.14.0",
