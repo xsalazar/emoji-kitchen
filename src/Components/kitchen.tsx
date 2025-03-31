@@ -7,7 +7,7 @@ import ContentCopy from "@mui/icons-material/ContentCopy";
 import Download from "@mui/icons-material/Download";
 import Fab from "@mui/material/Fab";
 import Fade from "@mui/material/Fade";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import ImageList from "@mui/material/ImageList";
 import { imageListItemClasses } from "@mui/material/ImageListItem";
