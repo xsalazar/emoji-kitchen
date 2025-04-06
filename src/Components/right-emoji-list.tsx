@@ -1,6 +1,6 @@
+import { ImageListItem } from "@mui/material";
 import { Dispatch } from "react";
 import { getEmojiData, getNotoEmojiUrl, getSupportedEmoji } from "./utils";
-import { ImageListItem } from "@mui/material";
 
 export default function RightEmojiList({
   handleRightEmojiClicked,

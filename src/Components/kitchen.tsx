@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from "react";
+import ContentCopy from "@mui/icons-material/ContentCopy";
+import Download from "@mui/icons-material/Download";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
-import ContentCopy from "@mui/icons-material/ContentCopy";
-import Download from "@mui/icons-material/Download";
 import Fab from "@mui/material/Fab";
 import Fade from "@mui/material/Fade";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import ImageList from "@mui/material/ImageList";
-import { imageListItemClasses } from "@mui/material/ImageListItem";
-import ImageListItem from "@mui/material/ImageListItem";
-import LoadingButton from "@mui/lab/LoadingButton";
+import ImageListItem, {
+  imageListItemClasses,
+} from "@mui/material/ImageListItem";
 import Menu from "@mui/material/Menu";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Typography from "@mui/material/Typography";
-import JSZip from "jszip";
 import saveAs from "file-saver";
+import JSZip from "jszip";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { MouseCoordinates } from "./types";
-import { getEmojiData, getNotoEmojiUrl, getSupportedEmoji } from "./utils";
-import Search from "./search";
-import RightEmojiList from "./right-emoji-list";
 import LeftEmojiList from "./left-emoji-list";
 import MobileEmojiList from "./mobile-emoji-list";
+import RightEmojiList from "./right-emoji-list";
+import Search from "./search";
+import { MouseCoordinates } from "./types";
+import { getEmojiData, getNotoEmojiUrl, getSupportedEmoji } from "./utils";
 
 export default function Kitchen() {
   // Selection helpers

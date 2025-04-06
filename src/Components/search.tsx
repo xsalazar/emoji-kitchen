@@ -1,14 +1,12 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useDebounce } from "@uidotdev/usehooks";
-import {
-  CircularProgress,
-  Divider,
-  IconButton,
-  InputBase,
-  Paper,
-  Typography,
-} from "@mui/material";
 import { Close, Search as SearchIcon } from "@mui/icons-material";
+import CircularProgress from "@mui/material/CircularProgress";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { useDebounce } from "@uidotdev/usehooks";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getEmojiData, getNotoEmojiUrl } from "./utils";
 
 export default function Search({

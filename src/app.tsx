@@ -1,4 +1,3 @@
-import { ThemeProvider, createTheme } from "@mui/material";
 import {
   amber,
   blue,
@@ -15,6 +14,7 @@ import {
   purple,
   teal,
 } from "@mui/material/colors";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Footer from "./Components/footer";
 import Kitchen from "./Components/kitchen";
 
@@ -42,7 +42,7 @@ const theme = createTheme({
   },
 });
 
-function App() {
+export default function App() {
   if (window.self === window.top) {
     return (
       <div
@@ -61,5 +61,3 @@ function App() {
     );
   }
 }
-
-export default App;
