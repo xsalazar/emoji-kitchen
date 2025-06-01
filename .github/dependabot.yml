@@ -5,18 +5,6 @@ updates:
     directory: "/"
     labels:
       - "dependabot :robot:"
-    reviewers:
-      - "xsalazar"
-    schedule:
-      interval: "daily"
-
-  # Helper scripts
-  - package-ecosystem: "npm"
-    directory: "/scripts"
-    labels:
-      - "dependabot :robot:"
-    reviewers:
-      - "xsalazar"
     schedule:
       interval: "daily"
 
@@ -25,7 +13,5 @@ updates:
     directory: "/"
     labels:
       - "dependabot :robot:"
-    reviewers:
-      - "xsalazar"
     schedule:
       interval: "daily"
