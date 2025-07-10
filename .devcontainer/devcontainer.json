@@ -1,5 +1,5 @@
 {
-  "image": "node:20",
+  "image": "node:24",
   "customizations": {
     "vscode": {
       "extensions": [
