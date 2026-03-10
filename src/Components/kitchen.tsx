@@ -4,6 +4,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Chip from "@mui/material/Chip";
+import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import Fab from "@mui/material/Fab";
 import Fade from "@mui/material/Fade";
@@ -28,9 +29,18 @@ import MobileEmojiList from "./mobile-emoji-list";
 import RightEmojiList from "./right-emoji-list";
 import Search from "./search";
 import { MouseCoordinates } from "./types";
-import { getEmojiData, getNotoEmojiUrl, getSupportedEmoji } from "./utils";
+import {
+  getEmojiData,
+  getNotoEmojiUrl,
+  getSupportedEmoji,
+  loadMetadata,
+} from "./utils";
 
 export default function Kitchen() {
+  // Metadata loaded gate (lazy-loaded to keep initial bundle small)
+  const [metadataReady, setMetadataReady] = useState(false);
+  const [metadataError, setMetadataError] = useState<Error | null>(null);
+
   // Selection helpers
   var [selectedLeftEmoji, setSelectedLeftEmoji] = useState("");
   var [selectedRightEmoji, setSelectedRightEmoji] = useState("");
@@ -39,7 +49,7 @@ export default function Kitchen() {
   const [leftEmojiSelected, setLeftEmojiSelected] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(
-    window.innerHeight <= 512
+    window.innerHeight <= 512,
   );
   const [selectedMode, setSelectedMode] = useState("combine");
   const [combinationCopied, setCombinationCopied] = useState(false);
@@ -53,16 +63,31 @@ export default function Kitchen() {
   // Search results helpers
   const [leftSearchResults, setLeftSearchResults] = useState<Array<string>>([]);
   const [rightSearchResults, setRightSearchResults] = useState<Array<string>>(
-    []
+    [],
   );
   const [mobileSearchResults, setMobileSearchResults] = useState<Array<string>>(
-    []
+    [],
   );
 
   // Search terms helpers
   const [leftUuid, setLeftUuid] = useState<string>(uuidv4());
   const [rightUuid, setRightUuid] = useState<string>(uuidv4());
   const [mobileUuid, setMobileUuid] = useState<string>(uuidv4());
+
+  // Lazy-load metadata so the large JSON is not in the initial bundle
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        await loadMetadata();
+        setMetadataReady(true);
+      } catch (e) {
+        setMetadataReady(false);
+        setMetadataError(e instanceof Error ? e : new Error(String(e)));
+      }
+    };
+
+    fetchMetadata();
+  }, []);
 
   /**
    * 📱 Mobile handler to naively detect if we're on a phone or not
@@ -93,20 +118,30 @@ export default function Kitchen() {
   }, []);
 
   /**
-   * 📱 Mobile handler to set a random combination on load
+   * 📱 Mobile handler to set a random combination on load (after metadata is ready)
    */
   useEffect(() => {
+    // Wait until we have the metadata available
+    if (!metadataReady) {
+      return;
+    }
+
     if (isMobile) {
       handleFullEmojiRandomize();
     }
-  }, []);
+  }, [isMobile, metadataReady]);
 
   /**
    * 📱 Mobile handler to reset state when resizing window smaller to trigger mobile view
    */
   useEffect(() => {
+    // Wait until we have the metadata available
+    if (!metadataReady) {
+      return;
+    }
+
+    // Leaving mobile view should always be a subset of desktop functionality
     if (!isMobile) {
-      // Leaving mobile view should always be a subset of desktop functionality
       return;
     }
 
@@ -117,7 +152,7 @@ export default function Kitchen() {
     } else if (selectedLeftEmoji === "" && selectedRightEmoji === "") {
       handleFullEmojiRandomize();
     }
-  }, [isMobile]);
+  }, [isMobile, metadataReady]);
 
   /**
    * 🖨️ Handler to show the little chip when copying a combination on mobile from the browse tab
@@ -163,7 +198,7 @@ export default function Kitchen() {
       // On mobile, use the right emoji as a base and select a random left emoji from the supported list
       const data = getEmojiData(selectedRightEmoji);
       const possibleLeftEmoji = Object.keys(data.combinations).filter(
-        (codepoint) => codepoint !== selectedLeftEmoji // Don't randomly choose the same left emoji
+        (codepoint) => codepoint !== selectedLeftEmoji, // Don't randomly choose the same left emoji
       );
 
       const randomLeftEmoji =
@@ -177,7 +212,7 @@ export default function Kitchen() {
 
       // Pick a random emoji from all possible emoji
       possibleEmoji = getSupportedEmoji().filter(
-        (codepoint) => codepoint !== selectedLeftEmoji
+        (codepoint) => codepoint !== selectedLeftEmoji,
       );
 
       const randomEmoji =
@@ -198,7 +233,7 @@ export default function Kitchen() {
       }
     } else {
       setSelectedRightEmoji(
-        clickedEmoji === selectedRightEmoji ? "" : clickedEmoji
+        clickedEmoji === selectedRightEmoji ? "" : clickedEmoji,
       );
     }
   };
@@ -209,7 +244,7 @@ export default function Kitchen() {
   const handleRightEmojiRandomize = () => {
     const data = getEmojiData(selectedLeftEmoji);
     const possibleEmoji = Object.keys(data.combinations).filter(
-      (codepoint) => codepoint !== selectedRightEmoji // Don't randomly choose the same right emoji
+      (codepoint) => codepoint !== selectedRightEmoji, // Don't randomly choose the same right emoji
     );
 
     const randomEmoji =
@@ -234,7 +269,7 @@ export default function Kitchen() {
 
     const data = getEmojiData(randomLeftEmoji);
     const possibleRightEmoji = Object.keys(data.combinations).filter(
-      (codepoint) => codepoint !== randomLeftEmoji
+      (codepoint) => codepoint !== randomLeftEmoji,
     );
 
     const randomRightEmoji =
@@ -265,7 +300,7 @@ export default function Kitchen() {
             mouseX: event.clientX - 2,
             mouseY: event.clientY - 4,
           }
-        : undefined
+        : undefined,
     );
   };
 
@@ -278,7 +313,7 @@ export default function Kitchen() {
       // See: https://github.com/Stuk/jszip/issues/690
       const currentDate = new Date();
       const dateWithOffset = new Date(
-        currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
+        currentDate.getTime() - currentDate.getTimezoneOffset() * 60000,
       );
       (JSZip as any).defaults.date = dateWithOffset;
 
@@ -349,12 +384,59 @@ export default function Kitchen() {
       });
   };
 
+  // If we have an error, show that first
+  if (metadataError) {
+    return (
+      <Container
+        maxWidth="sm"
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "50vh",
+        }}
+      >
+        <Typography color="error" gutterBottom>
+          Failed to load emoji data 🙈
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {metadataError ? metadataError.message : "We'll be right back"}
+        </Typography>
+      </Container>
+    );
+  }
+
+  // If we're still loading the metadata, show the loader
+  if (!metadataReady) {
+    return (
+      <Container
+        maxWidth="xl"
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "50vh",
+        }}
+      >
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+          Loading emoji data...
+        </Typography>
+        <CircularProgress size={32} />
+      </Container>
+    );
+  }
+
   // See: https://caniuse.com/async-clipboard
   var hasClipboardSupport = "write" in navigator.clipboard;
   var middleList;
   var combination;
   var showOneCombo = false;
 
+  // Middle list logic (could be better)
   if (isMobile) {
     if (selectedLeftEmoji === "" || selectedRightEmoji === "") {
       middleList = <div></div>;
@@ -470,6 +552,7 @@ export default function Kitchen() {
     }
   }
 
+  // Render mobile view
   if (isMobile) {
     return (
       <Container
@@ -551,7 +634,7 @@ export default function Kitchen() {
                             loading="lazy"
                             alt={getEmojiData(selectedLeftEmoji).alt}
                             src={getNotoEmojiUrl(
-                              getEmojiData(selectedLeftEmoji).emojiCodepoint
+                              getEmojiData(selectedLeftEmoji).emojiCodepoint,
                             )}
                           />
                         ) : null}
@@ -619,7 +702,7 @@ export default function Kitchen() {
                             loading="lazy"
                             alt={getEmojiData(selectedRightEmoji).alt}
                             src={getNotoEmojiUrl(
-                              getEmojiData(selectedRightEmoji).emojiCodepoint
+                              getEmojiData(selectedRightEmoji).emojiCodepoint,
                             )}
                           />
                         ) : null}
@@ -780,6 +863,7 @@ export default function Kitchen() {
     );
   }
 
+  // Render desktop view
   return (
     <Container
       maxWidth="xl"
