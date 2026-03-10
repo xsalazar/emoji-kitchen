@@ -12,12 +12,14 @@ This repository leverages [VSCode's devcontainer](https://code.visualstudio.com/
 
 ### Application
 
-To get started, you will need to first download the supporting metadata, then install and start the project normally:
+To get started, download the supporting metadata into `public/` (so the app can load it at runtime), then install and start the project:
 
 ```bash
-curl -L --compressed https://raw.githubusercontent.com/xsalazar/emoji-kitchen-backend/main/app/metadata.json -o src/Components/metadata.json
+curl -L --compressed https://raw.githubusercontent.com/xsalazar/emoji-kitchen-backend/main/app/metadata.json -o public/metadata.json
 npm install && npm start
 ```
+
+The metadata is loaded asynchronously after the app, which keeps the initial JavaScript bundle small and improves startup time.
 
 This will start the application on your local machine, running on [http://localhost:5173/](http://localhost:5173).
 
