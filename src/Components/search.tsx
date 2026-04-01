@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useDebounce } from "@uidotdev/usehooks";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { getEmojiData, getNotoEmojiUrl } from "./utils";
+import { getEmojiData, getNotoEmojiUrl } from "./utils.js";
 
 export default function Search({
   disabled,
@@ -51,7 +51,7 @@ export default function Search({
             ? requestQuery.substring(0, 127)
             : requestQuery;
         const data = await fetch(
-          `https://backend.emojikitchen.dev/?q=${requestQuery}`
+          `https://backend.emojikitchen.dev/?q=${requestQuery}`,
         );
         results = await data.json();
       }

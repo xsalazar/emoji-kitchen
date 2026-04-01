@@ -1,6 +1,6 @@
 import { ImageListItem } from "@mui/material";
 import { Dispatch } from "react";
-import { getEmojiData, getNotoEmojiUrl, getSupportedEmoji } from "./utils";
+import { getEmojiData, getNotoEmojiUrl, getSupportedEmoji } from "./utils.js";
 
 export default function RightEmojiList({
   handleRightEmojiClicked,
@@ -19,7 +19,7 @@ export default function RightEmojiList({
   // If we have search results, filter the top-level items down
   if (rightSearchResults.length > 0) {
     knownSupportedEmoji = knownSupportedEmoji.filter((emoji) =>
-      rightSearchResults.includes(emoji)
+      rightSearchResults.includes(emoji),
     );
   }
 

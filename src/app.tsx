@@ -15,8 +15,8 @@ import {
   teal,
 } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Footer from "./Components/footer";
-import Kitchen from "./Components/kitchen";
+import Footer from "./Components/footer.js";
+import Kitchen from "./Components/kitchen.js";
 
 // 🌈
 const colors = [

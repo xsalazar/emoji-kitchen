@@ -1,4 +1,4 @@
-import type { EmojiData, EmojiMetadata } from "./types";
+import type { EmojiData, EmojiMetadata } from "./types.js";
 
 let cachedMetadata: EmojiMetadata | null = null;
 

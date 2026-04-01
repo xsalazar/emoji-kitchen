@@ -1,6 +1,6 @@
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import Download from "@mui/icons-material/Download";
-import LoadingButton from "@mui/lab/LoadingButton";
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import ButtonBase from "@mui/material/ButtonBase";
 import Chip from "@mui/material/Chip";
@@ -24,17 +24,17 @@ import saveAs from "file-saver";
 import JSZip from "jszip";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import LeftEmojiList from "./left-emoji-list";
-import MobileEmojiList from "./mobile-emoji-list";
-import RightEmojiList from "./right-emoji-list";
-import Search from "./search";
-import { MouseCoordinates } from "./types";
+import LeftEmojiList from "./left-emoji-list.js";
+import MobileEmojiList from "./mobile-emoji-list.js";
+import RightEmojiList from "./right-emoji-list.js";
+import Search from "./search.js";
+import { MouseCoordinates } from "./types.js";
 import {
   getEmojiData,
   getNotoEmojiUrl,
   getSupportedEmoji,
   loadMetadata,
-} from "./utils";
+} from "./utils.js";
 
 export default function Kitchen() {
   // Metadata loaded gate (lazy-loaded to keep initial bundle small)
@@ -933,7 +933,7 @@ export default function Kitchen() {
                 : undefined
             }
           >
-            <LoadingButton
+            <Button
               loading={isBulkDownloading}
               loadingPosition="start"
               onClick={handleBulkImageDownload}
@@ -941,7 +941,7 @@ export default function Kitchen() {
               sx={{ mx: 1 }}
             >
               Bulk Download
-            </LoadingButton>
+            </Button>
           </Menu>
         ) : undefined}
       </Box>

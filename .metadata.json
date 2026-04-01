@@ -1,0 +1,7 @@
+{
+  "dependabot": true,
+  "devContainers": true,
+  "muiVersion": 7,
+  "nodeVersion": 24,
+  "viteVersion": 8
+}

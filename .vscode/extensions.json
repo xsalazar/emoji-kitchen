@@ -1,1 +1,3 @@
-{ "recommendations": ["hediet.vscode-drawio"] }
+{
+  "recommendations": ["hediet.vscode-drawio"]
+}
