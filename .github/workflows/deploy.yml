@@ -22,7 +22,7 @@ jobs:
           persist-credentials: false
 
       - name: Download Emoji Kitchen Metadata 💾
-        uses: xsalazar/actions/downloader@master
+        uses: xsalazar/actions/downloader@main
         with:
           url: "https://raw.githubusercontent.com/xsalazar/emoji-kitchen-backend/main/app/metadata.json"
           filename: "public/metadata.json"
