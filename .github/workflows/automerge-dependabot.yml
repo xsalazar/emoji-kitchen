@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Checking the actor will prevent your Action run failing on non-Dependabot PRs
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
 
     steps:
       - name: Fetch Dependabot PR metadata 🎣

@@ -12,7 +12,9 @@ export default function Footer() {
   return (
     <div>
       <Box component="footer" sx={{ py: 4 }}>
-        <Stack spacing={4} direction="row" justifyContent="center">
+        <Stack spacing={4} direction="row" sx={{
+          justifyContent: "center"
+        }}>
           <Tooltip title="Contact Me">
             <Link
               href="https://xsalazar.com"

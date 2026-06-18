@@ -401,7 +401,7 @@ export default function Kitchen() {
         <Typography color="error" gutterBottom>
           Failed to load emoji data 🙈
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="textSecondary">
           {metadataError ? metadataError.message : "We'll be right back"}
         </Typography>
       </Container>
@@ -422,7 +422,7 @@ export default function Kitchen() {
           minHeight: "50vh",
         }}
       >
-        <Typography variant="body1" color="text.secondary" gutterBottom>
+        <Typography variant="body1" gutterBottom color="textSecondary">
           Loading emoji data...
         </Typography>
         <CircularProgress size={32} />
@@ -589,7 +589,13 @@ export default function Kitchen() {
               justifyContent: "center",
             }}
           >
-            <Stack direction="column" spacing={1} alignItems="center">
+            <Stack
+              direction="column"
+              spacing={1}
+              sx={{
+                alignItems: "center",
+              }}
+            >
               {/* Mode switcher */}
               <ToggleButtonGroup
                 color="primary"
@@ -663,19 +669,26 @@ export default function Kitchen() {
 
                   {/* Plus sign */}
                   <Grid
-                    alignItems="center"
-                    display="flex"
-                    justifyContent="center"
-                    paddingBottom="45px"
                     size={1}
-                    textAlign="center"
+                    sx={{
+                      alignItems: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      paddingBottom: "45px",
+                      textAlign: "center",
+                    }}
                   >
                     <Typography>+</Typography>
                   </Grid>
 
                   {/* Right Emoji */}
                   <Grid size={4}>
-                    <Stack direction="column" justifyContent="center">
+                    <Stack
+                      direction="column"
+                      sx={{
+                        justifyContent: "center",
+                      }}
+                    >
                       <Paper
                         elevation={0}
                         onClick={() => setLeftEmojiSelected(false)}
@@ -731,19 +744,26 @@ export default function Kitchen() {
 
                   {/* Equal sign */}
                   <Grid
-                    alignItems="center"
-                    display="flex"
-                    justifyContent="center"
-                    paddingBottom="45px"
                     size={1}
-                    textAlign="center"
+                    sx={{
+                      alignItems: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      paddingBottom: "45px",
+                      textAlign: "center",
+                    }}
                   >
                     <Typography>=</Typography>
                   </Grid>
 
                   {/* Result */}
                   <Grid size={4}>
-                    <Stack direction="column" justifyContent="center">
+                    <Stack
+                      direction="column"
+                      sx={{
+                        justifyContent: "center",
+                      }}
+                    >
                       <Paper
                         elevation={0}
                         sx={{
