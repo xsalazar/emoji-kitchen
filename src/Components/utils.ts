@@ -34,7 +34,7 @@ export function toPrintableEmoji(emojiCodepoint: string): string {
  * Converts an emoji codepoint into a static github reference image url
  */
 export function getNotoEmojiUrl(emojiCodepoint: string): string {
-  return `https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u${emojiCodepoint
+  return `https://raw.githubusercontent.com/googlefonts/noto-emoji/main/2D/svg/emoji_u${emojiCodepoint
     .split("-")
     .filter((x) => x !== "fe0f")
     .map((x) => x.padStart(4, "0")) // Handle ©️ and ®️
