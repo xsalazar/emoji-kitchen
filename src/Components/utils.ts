@@ -12,7 +12,7 @@ export async function loadMetadata(): Promise<void> {
   }
 
   // Loaded via the `./public` directory and shipped with GitHub pages
-  var res = await fetch(`/metadata.json`);
+  var res = await fetch(`${import.meta.env.BASE_URL}metadata.json`);
   if (!res.ok) {
     throw new Error(`Failed to load metadata: ${res.status}`);
   }
