@@ -1002,6 +1002,7 @@ export default function Kitchen() {
         <Box
           sx={{
             display: "grid",
+            width: "100%",
             gridTemplateColumns: {
               xs: "repeat(1, 1fr)",
               sm: showOneCombo ? "repeat(1, 1fr)" : "repeat(2, 1fr)",
